@@ -4,7 +4,7 @@ import Transaction from './routes/transactions';
 class Paystack {
   constructor(private key: string) {}
 
-  paystackInstance = axios.create({
+  private paystackInstance = axios.create({
     baseURL: 'https://api.paystack.co',
     headers: {
       'Content-Type': 'application/json',

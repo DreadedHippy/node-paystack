@@ -1,11 +1,54 @@
 import node_paystack from '../index';
 
-test('Paystack class', () => {
-  const newClass = node_paystack('Carl');
-  // expect(newClass.showKey()).toBe('Carl');
-});
+describe('Transaction tests', () => {
+  const newClass = node_paystack('sk_test_d2886236338ec9193406e6435d48b5336ed9dc7d');
 
-test('Test transaction class', () => {
-  const newClass = node_paystack('Carl');
-  expect(newClass.transaction.list()).toBe('list');
+  test('Test: Transaction initialization', (done) => {
+    newClass.transaction
+      .initialize({
+        email: 'test@mail.com',
+        amount: '1000',
+      })
+      .then((result) => {
+        expect(result).toEqual(
+          expect.objectContaining({
+            status: expect.any(Boolean),
+            message: expect.any(String),
+            data: expect.any(Object),
+          }),
+        );
+      })
+      .catch((error) => {
+        expect(error).toEqual(
+          expect.objectContaining({
+            status: expect.any(Boolean),
+            message: expect.any(String),
+          }),
+        );
+      });
+    done();
+  });
+
+  test('Test: Transaction verification', (done) => {
+    newClass.transaction
+      .verify('1taultm45dixcsl')
+      .then((result) => {
+        expect(result).toEqual(
+          expect.objectContaining({
+            status: expect.any(Boolean),
+            message: expect.any(String),
+            data: expect.any(Object),
+          }),
+        );
+      })
+      .catch((error) => {
+        expect(error).toEqual(
+          expect.objectContaining({
+            status: expect.any(Boolean),
+            message: expect.any(String),
+          }),
+        );
+      });
+    done();
+  });
 });

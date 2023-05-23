@@ -7,7 +7,7 @@
   "scripts": {
     "test": "jest --config jestconfig.json",
     "build": "tsc",
-    "dev": "ts-node src/index.ts", 
+    "dev": "nodemon -r dotenv/config debug.ts",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "lint": "tslint -p tsconfig.json",
     "prepare": "npm run build",
@@ -36,6 +36,7 @@
   "homepage": "https://github.com/DreadedHippy/node-paystack#readme",
   "devDependencies": {
     "@types/jest": "^29.5.1",
+    "dotenv": "^16.0.3",
     "jest": "^29.5.0",
     "prettier": "^2.8.8",
     "ts-jest": "^29.1.0",
