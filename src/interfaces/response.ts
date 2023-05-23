@@ -6,10 +6,6 @@ interface SuccessResponse {
   meta?: object;
 }
 
-interface NewAxiosResponse extends AxiosResponse {
-  data: SuccessResponse;
-}
-
 interface ErrorResponse {
   status: boolean;
   message: string;
@@ -17,4 +13,4 @@ interface ErrorResponse {
 
 type AllResponse = SuccessResponse & ErrorResponse;
 
-export { SuccessResponse, ErrorResponse, NewAxiosResponse, AllResponse };
+export { SuccessResponse, ErrorResponse, AllResponse };

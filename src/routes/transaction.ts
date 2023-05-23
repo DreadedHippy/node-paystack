@@ -1,5 +1,5 @@
 import { RequestData, RequestParams } from '../interfaces/request';
-import { AxiosInstance, AxiosError, AxiosResponse } from './../../node_modules/axios/index.d';
+import { AxiosInstance, AxiosError, AxiosResponse } from 'axios';
 import { SuccessResponse, ErrorResponse, AllResponse } from '../interfaces/response';
 
 class Transaction {

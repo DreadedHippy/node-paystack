@@ -1,5 +1,5 @@
 import axios from 'axios';
-import Transaction from './routes/transactions';
+import Transaction from './routes/transaction';
 
 class Paystack {
   constructor(private key: string) {}
