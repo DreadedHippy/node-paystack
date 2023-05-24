@@ -14,6 +14,11 @@ export interface RequestData extends BaseRequest {
   transaction_charge?: number;
   bearer?: string;
   queue?: boolean;
+  name?: string;
+  type?: string;
+  subaccounts?: string[];
+  bearerType?: string;
+  bearerSubaccount?: string;
 }
 
 export interface RequestParams extends BaseRequest {
@@ -28,4 +33,7 @@ export interface RequestParams extends BaseRequest {
   settled?: boolean;
   settlement?: number;
   payment_page?: number;
+  name?: string;
+  active?: boolean;
+  sortBy?: string;
 }
