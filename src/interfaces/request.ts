@@ -17,8 +17,10 @@ export interface RequestData extends BaseRequest {
   name?: string;
   type?: string;
   subaccounts?: string[];
-  bearerType?: string;
+  bearerType?: 'subaccount' | 'account' | 'all-proportional' | 'all';
   bearerSubaccount?: string;
+  active?: boolean;
+  share?: number;
 }
 
 export interface RequestParams extends BaseRequest {
