@@ -1,21 +1,31 @@
-import axios from 'axios';
 import Transaction from './routes/transaction';
 import { baseURL } from './static/variables';
 import Split from './routes/split';
+import Terminal from './routes/terminal';
+import Customer from './routes/customer';
+import Subaccount from './routes/subaccount';
+import Miscellaneous from './routes/miscellaneous';
+import Verification from './routes/verification';
+import Plan from './routes/plan';
 
 class Paystack {
   constructor(private key: string) {}
-
-  private paystackClient = axios.create({
+  axiosConfig = {
     baseURL,
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${this.key}`,
+      Authorization: `Bearer ${this.key}`
     },
-  });
+  }
 
-  transaction = new Transaction(this.paystackClient);
-  split = new Split(this.paystackClient);
+  transaction = new Transaction(this.axiosConfig);
+  split = new Split(this.axiosConfig);
+  terminal = new Terminal(this.axiosConfig);
+  subaccount = new Subaccount(this.axiosConfig);
+  plan = new Plan(this.axiosConfig);
+  customer = new Customer(this.axiosConfig);
+  miscellaneous = new Miscellaneous(this.axiosConfig);
+  verification = new Verification(this.axiosConfig);
 }
 
 function node_paystack(key: string) {

@@ -1,6 +1,6 @@
 import node_paystack from '..';
 
-describe('Split tests updates', () => {
+describe('Split tests', () => {
   const paystack = node_paystack(process.env.KEY as string);
   test('Update name of split', async () => {
     paystack.split
@@ -36,7 +36,7 @@ describe('Split tests updates', () => {
 
   test('Update bearer type to all', async () => {
     paystack.split
-      .update('760472', { bearerType: 'all' })
+      .update('760472', { bearer_type: 'all' })
       .then((result) => {
         expect(result.data.bearer_type).toBe('all');
       })
@@ -54,7 +54,7 @@ describe('Split tests updates', () => {
     paystack.split
       .update('760472', { active: false })
       .then((result) => {
-        expect(result.data.bearer_type).toBe('all');
+        expect(result.data.active).toBe(false);
       })
       .catch((error) => {
         expect(error).toEqual(

@@ -1,16 +1,16 @@
 import { AxiosInstance, AxiosError, CreateAxiosDefaults } from 'axios';
+import { createAxiosInstance } from '../utils/utils';
 import { baseURL } from '../static/variables';
 import { RequestData, RequestParams } from '../interfaces/request';
 import { AllResponse } from '../interfaces/response';
-import { createAxiosInstance } from '../utils/utils';
 
-class Split {
+class Customer {
 	paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
   constructor(private axiosConfig: CreateAxiosDefaults) {
-    this.paystackClient.defaults.baseURL = baseURL + 'split';
+    this.paystackClient.defaults.baseURL = baseURL + 'customer';
   }
 
-  create = async (data: RequestData) => {
+	create = async (data: RequestData) => {
     try {
       const result = await this.paystackClient({ method: 'POST', data });
       return result.data; // The data in the axios response
@@ -19,49 +19,54 @@ class Split {
     }
   };
 
-  list = async (params: RequestParams = {}) => {
+	list = async () => {
     try {
-      const result = await this.paystackClient({ method: 'GET', params });
+      const result = await this.paystackClient({ method: 'GET'});
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
       return error.response.data as AllResponse; // The data in the response of the axios error
     }
   };
 
-  fetch = async (id: string | number) => {
+	fetch = async (emailOrCode: string) => {
     try {
-      id = id.toString();
-      const result = await this.paystackClient({ method: 'GET', url: `${id}` });
+      const result = await this.paystackClient({ method: 'GET', url: `${emailOrCode}` });
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
       return error.response.data as AllResponse; // The data in the response of the axios error
     }
   };
 
-  update = async (id: string | number, data: RequestData) => {
+	update = async (code: string, data: RequestData) => {
     try {
-      id = id.toString();
-      const result = await this.paystackClient({ method: 'PUT', url: `${id}`, data });
+      const result = await this.paystackClient({ method: 'PUT', url: `${code}`, data });
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
       return error.response.data as AllResponse; // The data in the response of the axios error
     }
   };
 
-  upsertSubaccount = async (id: string | number, data: RequestData) => {
+	validate = async (emailOrCode: string, data: RequestData) => {
     try {
-      id = id.toString();
-      const result = await this.paystackClient({ method: 'POST', url: `${id}/subaccount/add`, data });
+      const result = await this.paystackClient({ method: 'PUT', url: `${emailOrCode}/identification`, data });
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
       return error.response.data as AllResponse; // The data in the response of the axios error
     }
   };
 
-  removeSubaccount = async (id: string | number, data: { subaccount: string }) => {
+	setRiskAction = async (data: RequestData) => {
     try {
-      id = id.toString();
-      const result = await this.paystackClient({ method: 'POST', url: `${id}/subaccount/remove`, data });
+      const result = await this.paystackClient({ method: 'POST', url: `set_risk_action`, data });
+      return result.data; // The data in the axios response
+    } catch (error: any | AxiosError) {
+      return error.response.data as AllResponse; // The data in the response of the axios error
+    }
+  };
+
+	deactivateAuthorization = async (data: RequestData) => {
+    try {
+      const result = await this.paystackClient({ method: 'POST', url: `deactivate_authorization`, data});
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
       return error.response.data as AllResponse; // The data in the response of the axios error
@@ -69,4 +74,4 @@ class Split {
   };
 }
 
-export default Split;
+export default Customer

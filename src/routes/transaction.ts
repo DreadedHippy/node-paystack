@@ -1,14 +1,15 @@
 import { RequestData, RequestParams } from '../interfaces/request';
-import { AxiosInstance, AxiosError, AxiosResponse } from 'axios';
+import { AxiosInstance, AxiosError, AxiosResponse, CreateAxiosDefaults } from 'axios';
 import { SuccessResponse, ErrorResponse, AllResponse } from '../interfaces/response';
 import { baseURL } from '../static/variables';
+import { createAxiosInstance } from '../utils/utils';
 
 class Transaction {
-  constructor(private paystackClient: AxiosInstance) {
-    this.paystackClient = paystackClient;
+	paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
+  constructor(private axiosConfig: CreateAxiosDefaults) {
     this.paystackClient.defaults.baseURL = baseURL + 'transaction';
   }
-
+  
   initialize = async (data: RequestData): Promise<SuccessResponse | ErrorResponse> => {
     try {
       const result = await this.paystackClient({ method: 'POST', data, url: `initialize` });
