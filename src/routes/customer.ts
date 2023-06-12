@@ -20,9 +20,9 @@ class Customer {
     }
   };
 
-	list = async (data?: CustomerRouteRequestParams) => {
+	list = async (params?: CustomerRouteRequestParams) => {
     try {
-      const result = await this.paystackClient({ method: 'GET', data});
+      const result = await this.paystackClient({ method: 'GET', params});
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
       return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error

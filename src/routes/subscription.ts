@@ -1,16 +1,16 @@
 import { AxiosInstance, AxiosError, CreateAxiosDefaults } from 'axios';
+import { createAxiosInstance } from '../utils/utils';
 import { baseURL } from '../static/variables';
 import { RequestData, RequestParams } from '../interfaces/request';
 import { AllResponse } from '../interfaces/response';
-import { createAxiosInstance } from '../utils/utils';
 
-class Split {
+class Subscription {
 	paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
   constructor(private axiosConfig: CreateAxiosDefaults) {
-    this.paystackClient.defaults.baseURL = baseURL + 'split';
+    this.paystackClient.defaults.baseURL = baseURL + 'subscription';
   }
 
-  create = async (data: RequestData) => {
+	create = async (data: RequestData) => {
     try {
       const result = await this.paystackClient({ method: 'POST', data });
       return result.data; // The data in the axios response
@@ -19,7 +19,7 @@ class Split {
     }
   };
 
-  list = async (params?: RequestParams) => {
+	list = async (params?: RequestParams) => {
     try {
       const result = await this.paystackClient({ method: 'GET', params });
       return result.data; // The data in the axios response
@@ -28,45 +28,53 @@ class Split {
     }
   };
 
-  fetch = async (id: string | number) => {
+	fetch = async (subscriptionIdOrCode: string) => {
     try {
-      id = id.toString();
-      const result = await this.paystackClient({ method: 'GET', url: `${id}` });
+      const result = await this.paystackClient({ method: 'GET', url: `${subscriptionIdOrCode}`});
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
       return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
     }
   };
 
-  update = async (id: string | number, data: RequestData) => {
+	enable = async (data: RequestData) => {
     try {
-      id = id.toString();
-      const result = await this.paystackClient({ method: 'PUT', url: `${id}`, data });
+      const result = await this.paystackClient({ method: 'GET', url: `enable`, data });
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
       return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
     }
   };
 
-  upsertSubaccount = async (id: string | number, data: RequestData) => {
+	disable = async (data: RequestData) => {
     try {
-      id = id.toString();
-      const result = await this.paystackClient({ method: 'POST', url: `${id}/subaccount/add`, data });
+      const result = await this.paystackClient({ method: 'GET', url: `disable`, data });
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
       return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
     }
   };
 
-  removeSubaccount = async (id: string | number, data: { subaccount: string }) => {
+	generateUpdateLink = async (code: string) => {
     try {
-      id = id.toString();
-      const result = await this.paystackClient({ method: 'POST', url: `${id}/subaccount/remove`, data });
+      const result = await this.paystackClient({ method: 'GET', url: `${code}/manage/link`});
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
       return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
     }
   };
+
+	sendUpdateLink = async (code: string) => {
+    try {
+      const result = await this.paystackClient({ method: 'POST', url: `${code}/manage/email`});
+      return result.data; // The data in the axios response
+    } catch (error: any | AxiosError) {
+      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
+    }
+  };
+
+
+
 }
 
-export default Split;
+export default Subscription;

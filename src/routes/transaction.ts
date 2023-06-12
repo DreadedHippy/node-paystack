@@ -28,9 +28,9 @@ class Transaction {
     }
   };
 
-  list = async (): Promise<AllResponse> => {
+  list = async (params?: RequestParams): Promise<AllResponse> => {
     try {
-      const result = await this.paystackClient({ method: 'GET' });
+      const result = await this.paystackClient({ method: 'GET', params});
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
       return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error

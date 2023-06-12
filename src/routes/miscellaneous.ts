@@ -10,9 +10,9 @@ class Miscellaneous {
     this.paystackClient.defaults.baseURL = baseURL;
   }
 
-	listBanks = async (data: MiscellaneousRouteRequestData) => {
+	listBanks = async (params: MiscellaneousRouteRequestData) => {
     try {
-      const result = await this.paystackClient({ method: 'GET', url: 'bank', data});
+      const result = await this.paystackClient({ method: 'GET', url: 'bank', params});
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
       return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error

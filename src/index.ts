@@ -8,6 +8,7 @@ import Miscellaneous from './routes/miscellaneous';
 import Verification from './routes/verification';
 import Plan from './routes/plan';
 import DedicatedAccount from './routes/dedicated_account';
+import Subscription from './routes/subscription';
 
 class Paystack {
   constructor(private key: string) {}
@@ -15,7 +16,7 @@ class Paystack {
     baseURL,
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${this.key}`
+      'Authorization': `Bearer ${this.key}`
     },
   }
 
@@ -28,6 +29,7 @@ class Paystack {
   miscellaneous = new Miscellaneous(this.axiosConfig);
   verification = new Verification(this.axiosConfig);
   dedicatedAccount = new DedicatedAccount(this.axiosConfig);
+  subscription = new Subscription(this.axiosConfig);
 }
 
 function node_paystack(key: string) {

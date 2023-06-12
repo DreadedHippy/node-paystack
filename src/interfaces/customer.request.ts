@@ -13,6 +13,6 @@ export interface CustomerRouteRequestData extends BaseRequest {
 export interface CustomerRouteRequestParams extends BaseRequest {
 	perPage?: number;
 	page?: number;
-	from: string;
-	to: string;
+	from?: string;
+	to?: string;
 }

@@ -53,6 +53,11 @@ export interface RequestData extends BaseRequest {
   split_code?: string;
   provider_slug?: string;
   bank_id?: string;
+  plan?: string;
+  authorization?: string;
+  start_date?: string;
+  code?: string;
+  token?: string;
 }
 
 //For GET requests
@@ -71,4 +76,6 @@ export interface RequestParams extends BaseRequest {
   name?: string;
   active?: boolean;
   sortBy?: string;
+  provider_slug?: string;
+  bank_id?: string;
 }

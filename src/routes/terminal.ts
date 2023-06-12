@@ -1,6 +1,6 @@
 import { AxiosInstance, AxiosError, CreateAxiosDefaults } from 'axios';
 import { baseURL } from '../static/variables';
-import { RequestData } from '../interfaces/request';
+import { RequestData, RequestParams } from '../interfaces/request';
 import { AllResponse } from '../interfaces/response';
 import { createAxiosInstance } from '../utils/utils';
 
@@ -38,9 +38,9 @@ class Terminal {
     }
 	}
 
-	list = async () => {
+	list = async (params?: RequestParams) => {
     try {
-      const result = await this.paystackClient({ method: 'GET'});
+      const result = await this.paystackClient({ method: 'GET', params});
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
       return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
