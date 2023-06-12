@@ -15,7 +15,7 @@ class Verification {
       const result = await this.paystackClient({ method: 'GET', url: `bank/resolve?account_number=${data.account_number}&bank_code=${data.bank_code}`});
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
-      return error.response.data as AllResponse; // The data in the response of the axios error
+      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
     }
 	}
 
@@ -24,8 +24,8 @@ class Verification {
       const result = await this.paystackClient({ method: 'POST', url: `bank/validate`});
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
-      return error.response.data as AllResponse; // The data in the response of the axios error
-    } 
+      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
+    }
 	}
 
 	resolveCardBin = async (bin: string) => {
@@ -33,7 +33,7 @@ class Verification {
       const result = await this.paystackClient({ method: 'GET', url: `decision/bin/${bin}`});
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
-      return error.response.data as AllResponse; // The data in the response of the axios error
+      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
     }
 	}
 

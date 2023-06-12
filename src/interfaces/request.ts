@@ -49,6 +49,10 @@ export interface RequestData extends BaseRequest {
   primary_contact_email?: string;
   primary_contact_name?: string;
   primary_contact_phone?: string;
+  preferred_bank?: string;
+  split_code?: string;
+  provider_slug?: string;
+  bank_id?: string;
 }
 
 //For GET requests

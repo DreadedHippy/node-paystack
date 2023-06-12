@@ -3,15 +3,14 @@ import { createAxiosInstance } from '../utils/utils';
 import { baseURL } from '../static/variables';
 import { RequestData, RequestParams } from '../interfaces/request';
 import { AllResponse } from '../interfaces/response';
-import { CustomerRouteRequestData, CustomerRouteRequestParams } from '../interfaces/customer.request';
 
-class Customer {
+class DedicatedAccount {
 	paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
   constructor(private axiosConfig: CreateAxiosDefaults) {
-    this.paystackClient.defaults.baseURL = baseURL + 'customer';
+    this.paystackClient.defaults.baseURL = baseURL + 'dedicated_account';
   }
 
-	create = async (data: CustomerRouteRequestData) => {
+	create = async (data: RequestData) => {
     try {
       const result = await this.paystackClient({ method: 'POST', data });
       return result.data; // The data in the axios response
@@ -20,59 +19,80 @@ class Customer {
     }
   };
 
-	list = async (data?: CustomerRouteRequestParams) => {
+	assign = async (data: RequestData) => {
     try {
-      const result = await this.paystackClient({ method: 'GET', data});
+      const result = await this.paystackClient({ method: 'POST', data, url: 'assign' });
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
       return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
     }
   };
 
-	fetch = async (emailOrCode: string) => {
+	list = async () => {
     try {
-      const result = await this.paystackClient({ method: 'GET', url: `${emailOrCode}` });
+      const result = await this.paystackClient({ method: 'GET'});
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
       return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
     }
   };
 
-	update = async (code: string, data: Partial<CustomerRouteRequestData>) => {
+	fetch = async (dedicatedAccountId: string) => {
     try {
-      const result = await this.paystackClient({ method: 'PUT', url: `${code}`, data });
+      const result = await this.paystackClient({ method: 'GET', url: `${dedicatedAccountId}` });
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
       return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
     }
   };
 
-	validate = async (emailOrCode: string, data: RequestData) => {
+	requery = async (dedicatedAccountId: string, data: {account_number: string, provider_slug: string, date?: string}) => {
     try {
-      const result = await this.paystackClient({ method: 'PUT', url: `${emailOrCode}/identification`, data });
+      const result = await this.paystackClient({ method: 'GET', url: `${dedicatedAccountId}`, data });
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
       return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
     }
   };
 
-	setRiskAction = async (data: RequestData) => {
+	deactivate = async (dedicatedAccountId: string) => {
     try {
-      const result = await this.paystackClient({ method: 'POST', url: `set_risk_action`, data });
+      const result = await this.paystackClient({ method: 'DELETE', url: `${dedicatedAccountId}`});
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
       return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
     }
   };
 
-	deactivateAuthorization = async (data: RequestData) => {
+	splitAccountTransaction = async (data: RequestData) => {
     try {
-      const result = await this.paystackClient({ method: 'POST', url: `deactivate_authorization`, data});
+      const result = await this.paystackClient({ method: 'POST', data});
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
       return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
     }
   };
+
+	removeSplit = async (data: {account_number: string}) => {
+    try {
+      const result = await this.paystackClient({ method: 'DELETE', data, url: 'split'});
+      return result.data; // The data in the axios response
+    } catch (error: any | AxiosError) {
+      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
+    }
+  };
+
+	listProviders = async () => {
+    try {
+      const result = await this.paystackClient({ method: 'GET', url: 'available_providers'});
+      return result.data; // The data in the axios response
+    } catch (error: any | AxiosError) {
+      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
+    }
+  };
+
+
+
 }
 
-export default Customer
+export default DedicatedAccount

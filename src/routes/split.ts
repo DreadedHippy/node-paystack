@@ -15,7 +15,7 @@ class Split {
       const result = await this.paystackClient({ method: 'POST', data });
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
-      return error.response.data as AllResponse; // The data in the response of the axios error
+      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
     }
   };
 
@@ -24,7 +24,7 @@ class Split {
       const result = await this.paystackClient({ method: 'GET', params });
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
-      return error.response.data as AllResponse; // The data in the response of the axios error
+      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
     }
   };
 
@@ -34,7 +34,7 @@ class Split {
       const result = await this.paystackClient({ method: 'GET', url: `${id}` });
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
-      return error.response.data as AllResponse; // The data in the response of the axios error
+      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
     }
   };
 
@@ -44,7 +44,7 @@ class Split {
       const result = await this.paystackClient({ method: 'PUT', url: `${id}`, data });
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
-      return error.response.data as AllResponse; // The data in the response of the axios error
+      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
     }
   };
 
@@ -54,7 +54,7 @@ class Split {
       const result = await this.paystackClient({ method: 'POST', url: `${id}/subaccount/add`, data });
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
-      return error.response.data as AllResponse; // The data in the response of the axios error
+      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
     }
   };
 
@@ -64,7 +64,7 @@ class Split {
       const result = await this.paystackClient({ method: 'POST', url: `${id}/subaccount/remove`, data });
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
-      return error.response.data as AllResponse; // The data in the response of the axios error
+      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
     }
   };
 }

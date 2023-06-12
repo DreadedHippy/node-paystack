@@ -15,7 +15,7 @@ class Miscellaneous {
       const result = await this.paystackClient({ method: 'GET', url: 'bank', data});
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
-      return error.response.data as AllResponse; // The data in the response of the axios error
+      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
     }
 	}
 
@@ -24,7 +24,7 @@ class Miscellaneous {
       const result = await this.paystackClient({ method: 'GET', url: 'country'});
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
-      return error.response.data as AllResponse; // The data in the response of the axios error
+      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
     }
 	}
 
@@ -33,7 +33,7 @@ class Miscellaneous {
       const result = await this.paystackClient({ method: 'GET', url: `address_verification/states?country=${countryCode}`});
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
-      return error.response.data as AllResponse; // The data in the response of the axios error
+      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
     }
 	}
 

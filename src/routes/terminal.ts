@@ -15,7 +15,7 @@ class Terminal {
       const result = await this.paystackClient({ method: 'POST', data, url: `${terminalId}/event` });
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
-      return error.response.data as AllResponse; // The data in the response of the axios error
+      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
     }
 
 	}
@@ -25,7 +25,7 @@ class Terminal {
       const result = await this.paystackClient({ method: 'GET', url: `${terminalId}/event/${eventId}` });
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
-      return error.response.data as AllResponse; // The data in the response of the axios error
+      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
     }
 	}
 
@@ -34,7 +34,7 @@ class Terminal {
       const result = await this.paystackClient({ method: 'GET', url: `${terminalId}/presence` });
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
-      return error.response.data as AllResponse; // The data in the response of the axios error
+      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
     }
 	}
 
@@ -43,7 +43,7 @@ class Terminal {
       const result = await this.paystackClient({ method: 'GET'});
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
-      return error.response.data as AllResponse; // The data in the response of the axios error
+      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
     }
 	}
 
@@ -52,7 +52,7 @@ class Terminal {
       const result = await this.paystackClient({ method: 'GET', url: `${terminalId}`});
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
-      return error.response.data as AllResponse; // The data in the response of the axios error
+      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
     }
 	}
 
@@ -61,7 +61,7 @@ class Terminal {
       const result = await this.paystackClient({ method: 'PUT', url: `${terminalId}`});
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
-      return error.response.data as AllResponse; // The data in the response of the axios error
+      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
     }
 	}
 
@@ -70,7 +70,7 @@ class Terminal {
       const result = await this.paystackClient({ method: 'POST', url: `commission_device`});
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
-      return error.response.data as AllResponse; // The data in the response of the axios error
+      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
     }
 	}
 
@@ -79,7 +79,7 @@ class Terminal {
       const result = await this.paystackClient({ method: 'POST', url: `decommission_device`});
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
-      return error.response.data as AllResponse; // The data in the response of the axios error
+      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
     }
 	}
 
