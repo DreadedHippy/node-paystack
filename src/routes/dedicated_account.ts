@@ -46,9 +46,9 @@ class DedicatedAccount {
     }
   };
 
-	requery = async (dedicatedAccountId: string, data: {account_number: string, provider_slug: string, date?: string}) => {
+	requery = async (dedicatedAccountId: string, params: {account_number: string, provider_slug: string, date?: string}) => {
     try {
-      const result = await this.paystackClient({ method: 'GET', url: `${dedicatedAccountId}`, data });
+      const result = await this.paystackClient({ method: 'GET', url: `${dedicatedAccountId}`, params });
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
       return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error

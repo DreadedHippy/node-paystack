@@ -39,7 +39,7 @@ class Subscription {
 
 	enable = async (data: RequestData) => {
     try {
-      const result = await this.paystackClient({ method: 'GET', url: `enable`, data });
+      const result = await this.paystackClient({ method: 'POST', url: `enable`, data });
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
       return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
@@ -48,7 +48,7 @@ class Subscription {
 
 	disable = async (data: RequestData) => {
     try {
-      const result = await this.paystackClient({ method: 'GET', url: `disable`, data });
+      const result = await this.paystackClient({ method: 'POST', url: `disable`, data });
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
       return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
