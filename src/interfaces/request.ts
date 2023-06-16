@@ -76,6 +76,21 @@ export interface RequestData extends BaseRequest {
   transfer_code?: string;
   otp?: string;
   transfers?: object[];
+  customer_email?: string;
+  customer_name?: string;
+  customer_phone?: string;
+  service_details?: string;
+  delivery_address?: string;
+  delivery_date?: Date;
+  resolution?: string;
+  message?: string;
+  refund_amount?: string;
+  uploaded_filename?: string;
+  evidence?: string;
+  transaction?: string;
+  customer_note?: string;
+  merchant_note?: string;
+
 
 }
 
@@ -98,4 +113,6 @@ export interface RequestParams extends BaseRequest {
   provider_slug?: string;
   bank_id?: string;
   include_archive?: boolean;
+  upload_filename?: string;
+  reference?: string;
 }

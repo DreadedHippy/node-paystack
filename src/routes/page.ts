@@ -58,7 +58,7 @@ class Page {
 
 	addProducts = async (pageId: string, productIds: string[] | number[]) => {
     try {
-      const result = await this.paystackClient({ method: 'POST', url: `${pageId}/product`, data: { products: productIds}});
+      const result = await this.paystackClient({ method: 'POST', url: `${pageId}/product`, data: { product: productIds}});
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
 			return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error

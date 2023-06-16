@@ -18,6 +18,9 @@ import TransfersControl from './routes/transfers_control';
 import Transfer from './routes/transfer';
 import BulkCharge from './routes/bulk_charge';
 import Integration from './routes/integration';
+import Charge from './routes/charge';
+import Dispute from './routes/dispute';
+import Refund from './routes/refund';
 
 class Paystack {
   constructor(private key: string) {}
@@ -48,6 +51,9 @@ class Paystack {
   transfersControl = new TransfersControl(this.axiosConfig);
   bulkCharge = new BulkCharge(this.axiosConfig);
   integration = new Integration(this.axiosConfig);
+  charge = new Charge(this.axiosConfig);
+  dispute = new Dispute(this.axiosConfig);
+  refund = new Refund(this.axiosConfig);
   
 }
 
