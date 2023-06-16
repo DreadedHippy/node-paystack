@@ -6,7 +6,7 @@ import { AllResponse } from '../interfaces/response';
 import { CustomerRouteRequestData, CustomerRouteRequestParams } from '../interfaces/customer.request';
 
 class Customer {
-	paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
+	private paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
   constructor(private axiosConfig: CreateAxiosDefaults) {
     this.paystackClient.defaults.baseURL = baseURL + 'customer';
   }

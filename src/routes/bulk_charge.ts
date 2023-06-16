@@ -1,16 +1,16 @@
-import { AxiosInstance, AxiosError, CreateAxiosDefaults } from 'axios';
-import { createAxiosInstance } from '../utils/utils';
-import { baseURL } from '../static/variables';
 import { RequestData, RequestParams } from '../interfaces/request';
-import { AllResponse } from '../interfaces/response';
+import { AxiosInstance, AxiosError, AxiosResponse, CreateAxiosDefaults } from 'axios';
+import { SuccessResponse, ErrorResponse, AllResponse } from '../interfaces/response';
+import { baseURL } from '../static/variables';
+import { createAxiosInstance } from '../utils/utils';
 
-class Subscription {
+class BulkCharge {
 	private paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
   constructor(private axiosConfig: CreateAxiosDefaults) {
-    this.paystackClient.defaults.baseURL = baseURL + 'subscription';
+    this.paystackClient.defaults.baseURL = baseURL + 'bulkcharge';
   }
 
-	create = async (data: RequestData) => {
+	initiate = async (data: {authorization: string, amount: number, reference: string}[]) => {
     try {
       const result = await this.paystackClient({ method: 'POST', data });
       return result.data; // The data in the axios response
@@ -21,60 +21,50 @@ class Subscription {
 
 	list = async (params?: RequestParams) => {
     try {
-      const result = await this.paystackClient({ method: 'GET', params });
+      const result = await this.paystackClient({ method: 'GET', params});
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
       return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
     }
   };
 
-	fetch = async (subscriptionIdOrCode: string) => {
+	fetch = async (idOrCode: string) => {
     try {
-      const result = await this.paystackClient({ method: 'GET', url: `${subscriptionIdOrCode}`});
+      const result = await this.paystackClient({ method: 'GET', url: `${idOrCode}`});
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
       return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
     }
   };
 
-	enable = async (data: RequestData) => {
+	fetchCharges = async (idOrCode: string, params?: RequestParams) => {
     try {
-      const result = await this.paystackClient({ method: 'POST', url: `enable`, data });
+      const result = await this.paystackClient({ method: 'GET', url: `${idOrCode}/charges`, params});
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
       return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
     }
   };
 
-	disable = async (data: RequestData) => {
+	pause = async (batchCode: string) => {
     try {
-      const result = await this.paystackClient({ method: 'POST', url: `disable`, data });
+      const result = await this.paystackClient({ method: 'GET', url: `pause/${batchCode}`});
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
       return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
     }
   };
 
-	generateUpdateLink = async (code: string) => {
+	resume = async (batchCode: string) => {
     try {
-      const result = await this.paystackClient({ method: 'GET', url: `${code}/manage/link`});
+      const result = await this.paystackClient({ method: 'GET', url: `resume/${batchCode}`});
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
       return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
     }
   };
-
-	sendUpdateLink = async (code: string) => {
-    try {
-      const result = await this.paystackClient({ method: 'POST', url: `${code}/manage/email`});
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
-  };
-
 
 
 }
 
-export default Subscription;
+export default BulkCharge;

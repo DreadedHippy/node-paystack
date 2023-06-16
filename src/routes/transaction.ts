@@ -5,7 +5,7 @@ import { baseURL } from '../static/variables';
 import { createAxiosInstance } from '../utils/utils';
 
 class Transaction {
-	paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
+	private paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
   constructor(private axiosConfig: CreateAxiosDefaults) {
     this.paystackClient.defaults.baseURL = baseURL + 'transaction';
   }

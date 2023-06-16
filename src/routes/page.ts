@@ -6,7 +6,7 @@ import { createAxiosInstance } from '../utils/utils';
 
 
 class Page {
-	paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
+	private paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
   constructor(private axiosConfig: CreateAxiosDefaults) {
     this.paystackClient.defaults.baseURL = baseURL + 'page';
   }

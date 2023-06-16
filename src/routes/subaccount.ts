@@ -7,7 +7,7 @@ import { AllResponse } from '../interfaces/response';
 
 
 class Subaccount {
-	paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
+	private paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
   constructor(private axiosConfig: CreateAxiosDefaults) {
     this.paystackClient.defaults.baseURL = baseURL + 'subaccount';
   }

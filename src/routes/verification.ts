@@ -5,7 +5,7 @@ import { VerificationRouteRequestData } from '../interfaces/verification.request
 import { createAxiosInstance } from '../utils/utils';
 
 class Verification {
-	paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
+	private paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
   constructor(private axiosConfig: CreateAxiosDefaults) {
     this.paystackClient.defaults.baseURL = baseURL 
   }

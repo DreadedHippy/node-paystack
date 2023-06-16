@@ -16,6 +16,8 @@ import Settlement from './routes/settlement';
 import TransferRecipient from './routes/transfer_recipient';
 import TransfersControl from './routes/transfers_control';
 import Transfer from './routes/transfer';
+import BulkCharge from './routes/bulk_charge';
+import Integration from './routes/integration';
 
 class Paystack {
   constructor(private key: string) {}
@@ -44,6 +46,8 @@ class Paystack {
   transferRecipient = new TransferRecipient(this.axiosConfig);
   transfer = new Transfer(this.axiosConfig);
   transfersControl = new TransfersControl(this.axiosConfig);
+  bulkCharge = new BulkCharge(this.axiosConfig);
+  integration = new Integration(this.axiosConfig);
   
 }
 

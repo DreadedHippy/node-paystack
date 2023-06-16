@@ -5,7 +5,7 @@ import { AllResponse } from '../interfaces/response';
 import { createAxiosInstance } from '../utils/utils';
 
 class Transfer {
-	paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
+	private paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
   constructor(private axiosConfig: CreateAxiosDefaults) {
     this.paystackClient.defaults.baseURL = baseURL + 'transfer';
   }
