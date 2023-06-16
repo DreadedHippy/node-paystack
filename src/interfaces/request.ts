@@ -1,12 +1,12 @@
 interface BaseRequest {
-  [key: string]: string | number | undefined | string[] | boolean | object;
+  [key: string]: string | number | undefined | boolean | object;
 }
 
 
 //For "POST", "PUSH" and other non-GET requests
 export interface RequestData extends BaseRequest {
   email?: string;
-  amount?: string;
+  amount?: number;
   invoice_limit?: number;
   channels?: string[];
   authorization_code?: string;
@@ -58,6 +58,25 @@ export interface RequestData extends BaseRequest {
   start_date?: string;
   code?: string;
   token?: string;
+  price?: number;
+  unlimited?: boolean;
+  quantity?: number;
+  redirect_url?: string;
+  custom_fields?: string;
+  due_date?: string;
+  line_items?: object[];
+  send_notification?: boolean;
+  draft?: boolean;
+  has_invoice?: boolean;
+  invoice_number?: string;
+  batch?: object[];
+  source?: "balance";
+  recipient?: string;
+  reason?: string;
+  transfer_code?: string;
+  otp?: string;
+  transfers?: object[];
+
 }
 
 //For GET requests
@@ -78,4 +97,5 @@ export interface RequestParams extends BaseRequest {
   sortBy?: string;
   provider_slug?: string;
   bank_id?: string;
+  include_archive?: boolean;
 }

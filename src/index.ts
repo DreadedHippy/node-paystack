@@ -9,10 +9,17 @@ import Verification from './routes/verification';
 import Plan from './routes/plan';
 import DedicatedAccount from './routes/dedicated_account';
 import Subscription from './routes/subscription';
+import Product from './routes/product';
+import Page from './routes/page';
+import PaystackPaymentRequest from './routes/payment_request';
+import Settlement from './routes/settlement';
+import TransferRecipient from './routes/transfer_recipient';
+import TransfersControl from './routes/transfers_control';
+import Transfer from './routes/transfer';
 
 class Paystack {
   constructor(private key: string) {}
-  axiosConfig = {
+  private axiosConfig = {
     baseURL,
     headers: {
       'Content-Type': 'application/json',
@@ -30,6 +37,14 @@ class Paystack {
   verification = new Verification(this.axiosConfig);
   dedicatedAccount = new DedicatedAccount(this.axiosConfig);
   subscription = new Subscription(this.axiosConfig);
+  product = new Product(this.axiosConfig);
+  paymentPage = new Page(this.axiosConfig);
+  paymentRequest = new PaystackPaymentRequest(this.axiosConfig);
+  settlement = new Settlement(this.axiosConfig);
+  transferRecipient = new TransferRecipient(this.axiosConfig);
+  transfer = new Transfer(this.axiosConfig);
+  transfersControl = new TransfersControl(this.axiosConfig);
+  
 }
 
 function node_paystack(key: string) {
