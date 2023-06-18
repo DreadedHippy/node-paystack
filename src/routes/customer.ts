@@ -1,4 +1,4 @@
-import { AxiosInstance, AxiosError, CreateAxiosDefaults } from 'axios';
+import { AxiosInstance, AxiosError, CreateAxiosDefaults, AxiosRequestConfig } from 'axios';
 import { createAxiosInstance } from '../utils/utils';
 import { baseURL } from '../static/variables';
 import { RequestData, RequestParams } from '../interfaces/request';
@@ -11,67 +11,46 @@ class Customer {
     this.paystackClient.defaults.baseURL = baseURL + 'customer';
   }
 
-	create = async (data: CustomerRouteRequestData) => {
-    try {
-      const result = await this.paystackClient({ method: 'POST', data });
+  
+	private apiRequest = async (requestConfig: AxiosRequestConfig) => {
+		try {
+      const result = await this.paystackClient(requestConfig);
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
+			// console.log(error)
+			let errorData = error.response?.data || error.cause  as AllResponse;
+			error.response?.data == undefined ? errorData = {error : "Data not received", cause: error.cause} :
+			errorData.httpStatus = {statusCode: error.response?.status, statusMessage: error.response?.statusText};
+      return errorData; // The data in the response of the axios error
     }
+	}
+
+	create = (data: CustomerRouteRequestData) => {
+    return this.apiRequest({ method: 'POST', data });
   };
 
-	list = async (params?: CustomerRouteRequestParams) => {
-    try {
-      const result = await this.paystackClient({ method: 'GET', params});
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+	list = (params?: CustomerRouteRequestParams) => {
+    return this.apiRequest({ method: 'GET', params});
   };
 
-	fetch = async (emailOrCode: string) => {
-    try {
-      const result = await this.paystackClient({ method: 'GET', url: `${emailOrCode}` });
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+	fetch = (emailOrCode: string) => {
+    return this.apiRequest({ method: 'GET', url: `${emailOrCode}`});
   };
 
-	update = async (code: string, data: Partial<CustomerRouteRequestData>) => {
-    try {
-      const result = await this.paystackClient({ method: 'PUT', url: `${code}`, data });
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+	update = (code: string, data: Partial<CustomerRouteRequestData>) => {
+    return this.apiRequest({ method: 'PUT', url: `${code}`, data });
   };
 
-	validate = async (emailOrCode: string, data: RequestData) => {
-    try {
-      const result = await this.paystackClient({ method: 'PUT', url: `${emailOrCode}/identification`, data });
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+	validate = (emailOrCode: string, data: RequestData) => {
+    return this.apiRequest({ method: 'POST', url: `${emailOrCode}/identification`, data });
   };
 
-	setRiskAction = async (data: RequestData) => {
-    try {
-      const result = await this.paystackClient({ method: 'POST', url: `set_risk_action`, data });
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+	setRiskAction = (data: RequestData) => {
+    return this.apiRequest({ method: 'POST', url: `set_risk_action`, data });
   };
 
-	deactivateAuthorization = async (data: RequestData) => {
-    try {
-      const result = await this.paystackClient({ method: 'POST', url: `deactivate_authorization`, data});
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+	deactivateAuthorization = (data: RequestData) => {
+    return this.apiRequest({ method: 'POST', url: `deactivate_authorization`, data });
   };
 }
 

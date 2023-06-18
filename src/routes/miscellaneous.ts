@@ -1,4 +1,4 @@
-import { AxiosInstance, AxiosError, CreateAxiosDefaults } from 'axios';
+import { AxiosInstance, AxiosError, CreateAxiosDefaults, AxiosRequestConfig } from 'axios';
 import { baseURL } from '../static/variables';
 import { AllResponse } from '../interfaces/response';
 import { MiscellaneousRouteRequestData } from '../interfaces/miscellaneous.request';
@@ -9,32 +9,30 @@ class Miscellaneous {
   constructor(private axiosConfig: CreateAxiosDefaults) {
     this.paystackClient.defaults.baseURL = baseURL;
   }
-
-	listBanks = async (params?: MiscellaneousRouteRequestData) => {
-    try {
-      const result = await this.paystackClient({ method: 'GET', url: 'bank', params});
+  
+	private apiRequest = async (requestConfig: AxiosRequestConfig) => {
+		try {
+      const result = await this.paystackClient(requestConfig);
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
+			// console.log(error)
+			let errorData = error.response?.data || error.cause  as AllResponse;
+			error.response?.data == undefined ? errorData = {error : "Data not received", cause: error.cause} :
+			errorData.httpStatus = {statusCode: error.response?.status, statusMessage: error.response?.statusText};
+      return errorData; // The data in the response of the axios error
     }
 	}
 
-	listCountries = async () => {
-    try {
-      const result = await this.paystackClient({ method: 'GET', url: 'country'});
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+	listBanks = (params?: MiscellaneousRouteRequestData) => {
+    return this.apiRequest({ method: 'GET', url: 'bank', params});
 	}
 
-	listStates = async (countryCode: string) => {
-    try {
-      const result = await this.paystackClient({ method: 'GET', url: `address_verification/states?country=${countryCode}`});
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+	listCountries = () => {
+    return this.apiRequest({ method: 'GET', url: 'country'});
+	}
+
+	listStates = (countryCode: string) => {
+    return this.apiRequest({ method: 'GET', url: `address_verification/states?country=${countryCode}`});
 	}
 
 }

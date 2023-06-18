@@ -1,4 +1,4 @@
-import { AxiosInstance, AxiosError, CreateAxiosDefaults } from 'axios';
+import { AxiosInstance, AxiosError, CreateAxiosDefaults, AxiosRequestConfig } from 'axios';
 import { createAxiosInstance } from '../utils/utils';
 import { baseURL } from '../static/variables';
 import { RequestData, RequestParams } from '../interfaces/request';
@@ -9,68 +9,46 @@ class Subscription {
   constructor(private axiosConfig: CreateAxiosDefaults) {
     this.paystackClient.defaults.baseURL = baseURL + 'subscription';
   }
-
-	create = async (data: RequestData) => {
-    try {
-      const result = await this.paystackClient({ method: 'POST', data });
+  
+	private apiRequest = async (requestConfig: AxiosRequestConfig) => {
+		try {
+      const result = await this.paystackClient(requestConfig);
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
+			// console.log(error)
+			let errorData = error.response?.data || error.cause  as AllResponse;
+			error.response?.data == undefined ? errorData = {error : "Data not received", cause: error.cause} :
+			errorData.httpStatus = {statusCode: error.response?.status, statusMessage: error.response?.statusText};
+      return errorData; // The data in the response of the axios error
     }
+	}
+
+	create = (data: RequestData) => {
+    return this.apiRequest({ method: 'POST', data });
   };
 
-	list = async (params?: RequestParams) => {
-    try {
-      const result = await this.paystackClient({ method: 'GET', params });
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+	list = (params?: RequestParams) => {
+    return this.apiRequest({ method: 'GET', params });
   };
 
-	fetch = async (subscriptionIdOrCode: string) => {
-    try {
-      const result = await this.paystackClient({ method: 'GET', url: `${subscriptionIdOrCode}`});
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+	fetch = (subscriptionIdOrCode: string) => {
+    return this.apiRequest({ method: 'GET', url: `${subscriptionIdOrCode}` });
   };
 
-	enable = async (data: RequestData) => {
-    try {
-      const result = await this.paystackClient({ method: 'POST', url: `enable`, data });
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+	enable = (data: RequestData) => {
+    return this.apiRequest({ method: 'POST', url: `enable`, data });
   };
 
-	disable = async (data: RequestData) => {
-    try {
-      const result = await this.paystackClient({ method: 'POST', url: `disable`, data });
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+	disable = (data: RequestData) => {
+    return this.apiRequest({ method: 'POST', url: `disable`, data });
   };
 
-	generateUpdateLink = async (code: string) => {
-    try {
-      const result = await this.paystackClient({ method: 'GET', url: `${code}/manage/link`});
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+	generateUpdateLink = (code: string) => {
+    return this.apiRequest({ method: 'GET', url: `${code}/manage/link`});
   };
 
-	sendUpdateLink = async (code: string) => {
-    try {
-      const result = await this.paystackClient({ method: 'POST', url: `${code}/manage/email`});
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+	sendUpdateLink = (code: string) => {
+    return this.apiRequest({ method: 'POST', url: `${code}/manage/email`});
   };
 
 

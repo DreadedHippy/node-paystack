@@ -1,4 +1,4 @@
-import { AxiosInstance, AxiosError, CreateAxiosDefaults } from 'axios';
+import { AxiosInstance, AxiosError, CreateAxiosDefaults, AxiosRequestConfig } from 'axios';
 import { baseURL } from '../static/variables';
 import { RequestData, RequestParams } from '../interfaces/request';
 import { AllResponse } from '../interfaces/response';
@@ -9,59 +9,42 @@ class TransfersControl {
   constructor(private axiosConfig: CreateAxiosDefaults) {
     this.paystackClient.defaults.baseURL = baseURL;
   }
-
-	checkBalance = async () => {
-    try {
-      const result = await this.paystackClient({ method: 'GET', url: 'balance' });
+  
+	private apiRequest = async (requestConfig: AxiosRequestConfig) => {
+		try {
+      const result = await this.paystackClient(requestConfig);
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
+			// console.log(error)
+			let errorData = error.response?.data || error.cause  as AllResponse;
+			error.response?.data == undefined ? errorData = {error : "Data not received", cause: error.cause} :
+			errorData.httpStatus = {statusCode: error.response?.status, statusMessage: error.response?.statusText};
+      return errorData; // The data in the response of the axios error
     }
+	}
+
+	checkBalance = async () => {
+    return this.apiRequest({ method: 'GET', url: 'balance' });
   };
 
 	fetchBalanceLedger = async () => {
-    try {
-      const result = await this.paystackClient({ method: 'GET', url: 'balance/ledger' });
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+    return this.apiRequest({ method: 'GET', url: 'balance/ledger' });
   };
 	
 	resendOTP = async (data: RequestData) => {
-    try {
-      const result = await this.paystackClient({ method: 'POST', url: 'transfer/resend_otp', data });
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+    return this.apiRequest({ method: 'POST', url: 'transfer/resend_otp', data });
   };
 
 	disableOTP = async () => {
-    try {
-      const result = await this.paystackClient({ method: 'POST', url: 'transfer/disable_otp'});
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+    return this.apiRequest({ method: 'POST', url: 'transfer/disable_otp'});
   };
 
 	finalizeDisableOTP = async (data: {otp: string}) => {
-    try {
-      const result = await this.paystackClient({ method: 'POST', url: 'transfer/disable_otp_finalize', data});
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+    return this.apiRequest({ method: 'POST', url: 'transfer/disable_otp_finalize', data});
   };
 
 	enableOTP = async () => {
-    try {
-      const result = await this.paystackClient({ method: 'POST', url: 'transfer/enable_otp'});
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+    return this.apiRequest({ method: 'POST', url: 'transfer/enable_otp'});
   };
 
 };

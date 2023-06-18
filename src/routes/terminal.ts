@@ -1,4 +1,4 @@
-import { AxiosInstance, AxiosError, CreateAxiosDefaults } from 'axios';
+import { AxiosInstance, AxiosError, CreateAxiosDefaults, AxiosRequestConfig } from 'axios';
 import { baseURL } from '../static/variables';
 import { RequestData, RequestParams } from '../interfaces/request';
 import { AllResponse } from '../interfaces/response';
@@ -9,78 +9,50 @@ class Terminal {
   constructor(private axiosConfig: CreateAxiosDefaults) {
     this.paystackClient.defaults.baseURL = baseURL + 'terminal';
   }
-
-	sendEvent = async (terminalId: string, data: RequestData) => {
-    try {
-      const result = await this.paystackClient({ method: 'POST', data, url: `${terminalId}/event` });
+  
+	private apiRequest = async (requestConfig: AxiosRequestConfig) => {
+		try {
+      const result = await this.paystackClient(requestConfig);
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
-
-	}
-
-	fetchEventStatus = async (terminalId: string, eventId: string) => {
-    try {
-      const result = await this.paystackClient({ method: 'GET', url: `${terminalId}/event/${eventId}` });
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
+			// console.log(error)
+			let errorData = error.response?.data || error.cause  as AllResponse;
+			error.response?.data == undefined ? errorData = {error : "Data not received", cause: error.cause} :
+			errorData.httpStatus = {statusCode: error.response?.status, statusMessage: error.response?.statusText};
+      return errorData; // The data in the response of the axios error
     }
 	}
 
-	fetchTerminalStatus = async (terminalId: string) => {
-    try {
-      const result = await this.paystackClient({ method: 'GET', url: `${terminalId}/presence` });
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+	sendEvent = (terminalId: string, data: RequestData) => {
+    return this.apiRequest({ method: 'POST', data, url: `${terminalId}/event` });
 	}
 
-	list = async (params?: RequestParams) => {
-    try {
-      const result = await this.paystackClient({ method: 'GET', params});
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+	fetchEventStatus = (terminalId: string, eventId: string) => {
+    return this.apiRequest({ method: 'GET', url: `${terminalId}/event/${eventId}` });
 	}
 
-	fetch = async (terminalId: string) => {
-    try {
-      const result = await this.paystackClient({ method: 'GET', url: `${terminalId}`});
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+	fetchTerminalStatus = (terminalId: string) => {
+    return this.apiRequest({ method: 'GET', url: `${terminalId}/presence` });
 	}
 
-	update = async (terminalId: string, data: RequestData) => {
-    try {
-      const result = await this.paystackClient({ method: 'PUT', url: `${terminalId}`});
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+	list = (params?: RequestParams) => {
+    return this.apiRequest({ method: 'GET', params });
 	}
 
-	commission = async (data: RequestData) => {
-    try {
-      const result = await this.paystackClient({ method: 'POST', url: `commission_device`});
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+	fetch = (terminalId: string) => {
+    return this.apiRequest({ method: 'GET', url: `${terminalId}` });
 	}
 
-	decommission = async (data: RequestData) => {
-    try {
-      const result = await this.paystackClient({ method: 'POST', url: `decommission_device`});
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+	update = (terminalId: string, data: RequestData) => {
+    return this.apiRequest({ method: 'PUT', url: `${terminalId}`, data });
+	}
+
+	commission = (data: {serial_number: string}) => {
+    return this.apiRequest({ method: 'POST', url: `commission_device`, data });
+	}
+
+	decommission = (data: {serial_number: string}) => {
+    return this.apiRequest({ method: 'POST', url: `decommission_device`, data });
 	}
 
 

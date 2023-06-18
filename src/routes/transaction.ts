@@ -1,5 +1,5 @@
 import { RequestData, RequestParams } from '../interfaces/request';
-import { AxiosInstance, AxiosError, AxiosResponse, CreateAxiosDefaults } from 'axios';
+import { AxiosInstance, AxiosError, AxiosResponse, CreateAxiosDefaults, AxiosRequestConfig } from 'axios';
 import { SuccessResponse, ErrorResponse, AllResponse } from '../interfaces/response';
 import { baseURL } from '../static/variables';
 import { createAxiosInstance } from '../utils/utils';
@@ -10,86 +10,55 @@ class Transaction {
     this.paystackClient.defaults.baseURL = baseURL + 'transaction';
   }
   
-  initialize = async (data: RequestData): Promise<SuccessResponse | ErrorResponse> => {
-    try {
-      const result = await this.paystackClient({ method: 'POST', data, url: `initialize` });
+	private apiRequest = async (requestConfig: AxiosRequestConfig) => {
+		try {
+      const result = await this.paystackClient(requestConfig);
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
+			// console.log(error)
+			let errorData = error.response?.data || error.cause  as AllResponse;
+			error.response?.data == undefined ? errorData = {error : "Data not received", cause: error.cause} :
+			errorData.httpStatus = {statusCode: error.response?.status, statusMessage: error.response?.statusText};
+      return errorData; // The data in the response of the axios error
     }
+	}
+  
+  initialize = async (data: RequestData) => {
+    return this.apiRequest({ method: 'POST', data, url: `initialize` });
   };
 
-  verify = async (reference: string): Promise<AllResponse> => {
-    try {
-      const result = await this.paystackClient({ method: 'GET', url: `verify/${reference}` });
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+  verify = async (reference: string) => {
+    return this.apiRequest({ method: 'GET', url: `verify/${reference}` });
   };
 
-  list = async (params?: RequestParams): Promise<AllResponse> => {
-    try {
-      const result = await this.paystackClient({ method: 'GET', params});
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+  list = async (params?: RequestParams) => {
+    return this.apiRequest({ method: 'GET', params});
   };
 
   fetch = async (id: number) => {
-    try {
-      const result = await this.paystackClient({ method: 'GET', url: `${id}` });
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+    return this.apiRequest({ method: 'GET', url: `${id}`});
   };
 
   chargeAuthorization = async (data: RequestData) => {
-    try {
-      const result = await this.paystackClient({ method: 'POST', data, url: `charge_authorization` });
-      return result.data;
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+    return this.apiRequest({ method: 'POST', data, url: `charge_authorization` });
   };
 
   timeline = async (idOrReference: string | number) => {
-    try {
-      const result = await this.paystackClient({ method: 'GET', url: `timeline/${idOrReference.toString()}` });
-      return result.data;
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+    return this.apiRequest({ method: 'GET', url: `timeline/${idOrReference.toString()}` });
   };
 
   totals = async (params: RequestParams) => {
-    try {
-      const result = await this.paystackClient({ method: 'GET', url: `totals`, params });
-      return result.data;
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+    return this.apiRequest({ method: 'GET', url: `totals`, params });
   };
 
   export = async (params: RequestParams) => {
-    try {
-      const result = await this.paystackClient({ method: 'GET', url: `export`, params });
-      return result.data;
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+    return this.apiRequest({ method: 'GET', url: `export`, params });
   };
 
   partialDebit = async (data: RequestData) => {
-    try {
-      const result = await this.paystackClient({ method: 'POST', url: `partial_debit`, data });
-      return result.data;
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+    return this.apiRequest({ method: 'POST', url: `partial_debit`, data });
   };
+  
 }
 
 export default Transaction;

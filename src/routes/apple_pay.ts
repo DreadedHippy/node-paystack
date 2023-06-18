@@ -1,6 +1,5 @@
-import { RequestData, RequestParams } from '../interfaces/request';
-import { AxiosInstance, AxiosError, AxiosResponse, CreateAxiosDefaults } from 'axios';
-import { SuccessResponse, ErrorResponse, AllResponse } from '../interfaces/response';
+import { AxiosInstance, AxiosError, CreateAxiosDefaults, AxiosRequestConfig } from 'axios';
+import { AllResponse } from '../interfaces/response';
 import { baseURL } from '../static/variables';
 import { createAxiosInstance } from '../utils/utils';
 
@@ -10,32 +9,30 @@ class ApplePay {
   constructor(private axiosConfig: CreateAxiosDefaults) {
     this.paystackClient.defaults.baseURL = baseURL + 'apple-pay';
   }
-
-	registerDomain = async (data: {domainName: string}) => {
-    try {
-      const result = await this.paystackClient({ method: 'POST', data, url: `domain` });
+	
+	private apiRequest = async (requestConfig: AxiosRequestConfig) => {
+		try {
+      const result = await this.paystackClient(requestConfig);
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
+			// console.log(error)
+			let errorData = error.response?.data || error.cause  as AllResponse;
+			error.response?.data == undefined ? errorData = {error : "Data not received", cause: error.cause} :
+			errorData.httpStatus = {statusCode: error.response?.status, statusMessage: error.response?.statusText};
+      return errorData; // The data in the response of the axios error
     }
+	}
+
+	registerDomain = (data: {domainName: string}) => {
+		return this.apiRequest({ method: 'POST', data, url: `domain` });
   };
 
-	listDomains = async () => {
-    try {
-      const result = await this.paystackClient({ method: 'GET', url: `domain` });
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+	listDomains = () => {
+		return this.apiRequest({ method: 'GET', url: `domain` });
   };
 
-	unregisterDomain = async (data: {domainName: string}) => {
-    try {
-      const result = await this.paystackClient({ method: 'DELETE', url: `domain`, data });
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+	unregisterDomain = (data: {domainName: string}) => {
+		return this.apiRequest({ method: 'DELETE', data, url: `domain` });
   };
 
 }

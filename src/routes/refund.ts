@@ -1,5 +1,5 @@
 import { RequestData, RequestParams } from '../interfaces/request';
-import { AxiosInstance, AxiosError, AxiosResponse, CreateAxiosDefaults } from 'axios';
+import { AxiosInstance, AxiosError, AxiosResponse, CreateAxiosDefaults, AxiosRequestConfig } from 'axios';
 import { SuccessResponse, ErrorResponse, AllResponse } from '../interfaces/response';
 import { baseURL } from '../static/variables';
 import { createAxiosInstance } from '../utils/utils';
@@ -9,35 +9,31 @@ class Refund {
   constructor(private axiosConfig: CreateAxiosDefaults) {
     this.paystackClient.defaults.baseURL = baseURL + 'refund';
   }
-
-	create = async (data: RequestData) => {
-    try {
-      const result = await this.paystackClient({ method: 'POST', data });
+  
+	private apiRequest = async (requestConfig: AxiosRequestConfig) => {
+		try {
+      const result = await this.paystackClient(requestConfig);
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
+			// console.log(error)
+			let errorData = error.response?.data || error.cause  as AllResponse;
+			error.response?.data == undefined ? errorData = {error : "Data not received", cause: error.cause} :
+			errorData.httpStatus = {statusCode: error.response?.status, statusMessage: error.response?.statusText};
+      return errorData; // The data in the response of the axios error
     }
+	}
+
+	create = (data: RequestData) => {
+    return this.apiRequest({ method: 'POST', data});
   };
 
-	list = async (params?: RequestParams) => {
-    try {
-      const result = await this.paystackClient({ method: 'GET', params});
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+	list = (params?: RequestParams) => {
+    return this.apiRequest({ method: 'GET', params});
   };
 
-	fetch = async (refundId: string) => {
-    try {
-      const result = await this.paystackClient({ method: 'GET', url: `${refundId}`});
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+	fetch = (refundId: string) => {
+    return this.apiRequest({ method: 'GET', url: `${refundId}`});
   };
-
-
 
 }
 

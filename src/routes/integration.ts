@@ -1,5 +1,5 @@
 import { RequestData, RequestParams } from '../interfaces/request';
-import { AxiosInstance, AxiosError, AxiosResponse, CreateAxiosDefaults } from 'axios';
+import { AxiosInstance, AxiosError, AxiosResponse, CreateAxiosDefaults, AxiosRequestConfig } from 'axios';
 import { SuccessResponse, ErrorResponse, AllResponse } from '../interfaces/response';
 import { baseURL } from '../static/variables';
 import { createAxiosInstance } from '../utils/utils';
@@ -9,23 +9,26 @@ class Integration {
   constructor(private axiosConfig: CreateAxiosDefaults) {
     this.paystackClient.defaults.baseURL = baseURL + 'integration';
   }
-
-	fetchTimeout = async () => {
-    try {
-      const result = await this.paystackClient({ method: 'GET', url: `payment_session_timeout`});
+  
+	private apiRequest = async (requestConfig: AxiosRequestConfig) => {
+		try {
+      const result = await this.paystackClient(requestConfig);
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
+			// console.log(error)
+			let errorData = error.response?.data || error.cause  as AllResponse;
+			error.response?.data == undefined ? errorData = {error : "Data not received", cause: error.cause} :
+			errorData.httpStatus = {statusCode: error.response?.status, statusMessage: error.response?.statusText};
+      return errorData; // The data in the response of the axios error
     }
+	}
+
+	fetchTimeout = () => {
+    return this.apiRequest({ method: 'GET', url: `payment_session_timeout`});
   };
 
-	updateTimeout = async (data: {timeout: number}) => {
-    try {
-      const result = await this.paystackClient({ method: 'PUT', url: `payment_session_timeout`, data});
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+	updateTimeout = (data: {timeout: number}) => {
+    return this.apiRequest({ method: 'PUT', url: `payment_session_timeout`, data});
   };
 
 }

@@ -1,6 +1,6 @@
-import { RequestData, RequestParams } from '../interfaces/request';
-import { AxiosInstance, AxiosError, AxiosResponse, CreateAxiosDefaults } from 'axios';
-import { SuccessResponse, ErrorResponse, AllResponse } from '../interfaces/response';
+import { RequestParams } from '../interfaces/request';
+import { AxiosInstance, AxiosError, CreateAxiosDefaults, AxiosRequestConfig } from 'axios';
+import { AllResponse } from '../interfaces/response';
 import { baseURL } from '../static/variables';
 import { createAxiosInstance } from '../utils/utils';
 
@@ -10,58 +10,42 @@ class BulkCharge {
     this.paystackClient.defaults.baseURL = baseURL + 'bulkcharge';
   }
 
-	initiate = async (data: {authorization: string, amount: number, reference: string}[]) => {
-    try {
-      const result = await this.paystackClient({ method: 'POST', data });
+  
+	private apiRequest = async (requestConfig: AxiosRequestConfig) => {
+		try {
+      const result = await this.paystackClient(requestConfig);
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
+			// console.log(error)
+			let errorData = error.response?.data || error.cause  as AllResponse;
+			error.response?.data == undefined ? errorData = {error : "Data not received", cause: error.cause} :
+			errorData.httpStatus = {statusCode: error.response?.status, statusMessage: error.response?.statusText};
+      return errorData; // The data in the response of the axios error
     }
+	}
+
+	initiate = (data: {authorization: string, amount: number, reference: string}[]) => {
+    return this.apiRequest({method: 'POST', data});
   };
 
-	list = async (params?: RequestParams) => {
-    try {
-      const result = await this.paystackClient({ method: 'GET', params});
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+	list = (params?: RequestParams) => {
+    return this.apiRequest({ method: 'GET', params});
   };
 
-	fetch = async (idOrCode: string) => {
-    try {
-      const result = await this.paystackClient({ method: 'GET', url: `${idOrCode}`});
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+	fetch = (batchIdOrCode: string) => {
+    return this.apiRequest({ method: 'GET', url: `${batchIdOrCode}`});
   };
 
-	fetchCharges = async (idOrCode: string, params?: RequestParams) => {
-    try {
-      const result = await this.paystackClient({ method: 'GET', url: `${idOrCode}/charges`, params});
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+	fetchCharges = (batchIdOrCode: string, params?: RequestParams) => {
+    return this.apiRequest({ method: 'GET', url: `${batchIdOrCode}/charges`, params});
   };
 
-	pause = async (batchCode: string) => {
-    try {
-      const result = await this.paystackClient({ method: 'GET', url: `pause/${batchCode}`});
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+	pause = (batchCode: string) => {
+    return this.apiRequest({ method: 'GET', url: `pause/${batchCode}`});
   };
 
-	resume = async (batchCode: string) => {
-    try {
-      const result = await this.paystackClient({ method: 'GET', url: `resume/${batchCode}`});
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+	resume = (batchCode: string) => {
+    return this.apiRequest({ method: 'GET', url: `resume/${batchCode}`});
   };
 
 

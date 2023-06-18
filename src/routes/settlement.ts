@@ -10,6 +10,7 @@ class Settlement {
   constructor(private axiosConfig: CreateAxiosDefaults) {
     this.paystackClient.defaults.baseURL = baseURL + 'settlement';
   }
+  
 
 	private apiRequest = async (requestConfig: AxiosRequestConfig) => {
 		try {
@@ -20,23 +21,12 @@ class Settlement {
     }
 	}
 
-	list = async (params?: RequestParams) => {
-		// return await this.apiRequest({ method: 'GET', params });
-    try {
-      const result = await this.paystackClient({ method: 'GET', params });
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+	list = (params?: RequestParams) => {
+		return this.apiRequest({ method: 'GET', params });
   };
 
-	listTransactions = async (settlementId: string, params?: RequestParams) => {
-    try {
-      const result = await this.paystackClient({ method: 'GET', url: `${settlementId}/transactions`, params});
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+	listTransactions = (settlementId: string, params?: RequestParams) => {
+    return this.apiRequest({ method: 'GET', url: `${settlementId}/transactions`, params });
   };
 
 }

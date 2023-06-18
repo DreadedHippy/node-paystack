@@ -1,4 +1,4 @@
-import { AxiosInstance, AxiosError, CreateAxiosDefaults } from 'axios';
+import { AxiosInstance, AxiosError, CreateAxiosDefaults, AxiosRequestConfig } from 'axios';
 import { baseURL } from '../static/variables';
 import { RequestData, RequestParams } from '../interfaces/request';
 import { AllResponse } from '../interfaces/response';
@@ -10,60 +10,44 @@ class Page {
   constructor(private axiosConfig: CreateAxiosDefaults) {
     this.paystackClient.defaults.baseURL = baseURL + 'page';
   }
-
-	create = async (data: RequestData) => {
-    try {
-      const result = await this.paystackClient({ method: 'POST', data });
+  
+	private apiRequest = async (requestConfig: AxiosRequestConfig) => {
+		try {
+      const result = await this.paystackClient(requestConfig);
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
+			// console.log(error)
+			let errorData = error.response?.data || error.cause  as AllResponse;
+			error.response?.data == undefined ? errorData = {error : "Data not received", cause: error.cause} :
+			errorData.httpStatus = {statusCode: error.response?.status, statusMessage: error.response?.statusText};
+      return errorData; // The data in the response of the axios error
     }
+	}
+
+	create = (data: RequestData) => {
+    return this.apiRequest({ method: 'POST', data });
   };
 
-	list = async (params?: RequestParams) => {
-    try {
-      const result = await this.paystackClient({ method: 'GET', params });
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+	list = (params?: RequestParams) => {
+    return this.apiRequest({ method: 'GET', params });
   };
 
-	fetch = async (idOrSlug: string) => {
-    try {
-      const result = await this.paystackClient({ method: 'GET', url: `${idOrSlug}` });
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+	fetch = (idOrSlug: string) => {
+    return this.apiRequest({ method: 'GET', url: `${idOrSlug}` });
   };
 
-	update = async (idOrSlug: string, data: string) => {
-    try {
-      const result = await this.paystackClient({ method: 'PUT', url: `${idOrSlug}`, data});
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+	update = (idOrSlug: string, data: string) => {
+    return this.apiRequest({ method: 'PUT', url: `${idOrSlug}`, data });
   };
 
-	checkSlugAvailability = async (slug: string) => {
-    try {
-      const result = await this.paystackClient({ method: 'GET', url: `check_slug_availability/${slug}`});
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+	checkSlugAvailability = (slug: string) => {
+    return this.apiRequest({ method: 'GET', url: `check_slug_availability/${slug}` });
   };
 
-	addProducts = async (pageId: string, productIds: string[] | number[]) => {
-    try {
-      const result = await this.paystackClient({ method: 'POST', url: `${pageId}/product`, data: { product: productIds}});
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-			return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+	addProducts = (pageId: string, productIds: string[] | number[]) => {
+    return this.apiRequest({ method: 'POST', url: `${pageId}/product`, data: { product: productIds}});
   };
+
 }
 
 export default Page

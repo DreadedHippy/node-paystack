@@ -1,4 +1,4 @@
-import { AxiosInstance, AxiosError, CreateAxiosDefaults } from 'axios';
+import { AxiosInstance, AxiosError, CreateAxiosDefaults, AxiosRequestConfig } from 'axios';
 import { baseURL } from '../static/variables';
 import { RequestData, RequestParams } from '../interfaces/request';
 import { AllResponse } from '../interfaces/response';
@@ -9,63 +9,42 @@ class Split {
   constructor(private axiosConfig: CreateAxiosDefaults) {
     this.paystackClient.defaults.baseURL = baseURL + 'split';
   }
-
-  create = async (data: RequestData) => {
-    try {
-      const result = await this.paystackClient({ method: 'POST', data });
+  
+	private apiRequest = async (requestConfig: AxiosRequestConfig) => {
+		try {
+      const result = await this.paystackClient(requestConfig);
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
+			// console.log(error)
+			let errorData = error.response?.data || error.cause  as AllResponse;
+			error.response?.data == undefined ? errorData = {error : "Data not received", cause: error.cause} :
+			errorData.httpStatus = {statusCode: error.response?.status, statusMessage: error.response?.statusText};
+      return errorData; // The data in the response of the axios error
     }
+	}
+
+  create = (data: RequestData) => {
+    return this.apiRequest({ method: 'POST', data});
   };
 
-  list = async (params?: RequestParams) => {
-    try {
-      const result = await this.paystackClient({ method: 'GET', params });
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+  list = (params?: RequestParams) => {
+    return this.apiRequest({ method: 'GET', params });
   };
 
-  fetch = async (id: string | number) => {
-    try {
-      id = id.toString();
-      const result = await this.paystackClient({ method: 'GET', url: `${id}` });
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+  fetch = (id: string | number) => {
+    return this.apiRequest({ method: 'GET', url: `${id}` });
   };
 
-  update = async (id: string | number, data: RequestData) => {
-    try {
-      id = id.toString();
-      const result = await this.paystackClient({ method: 'PUT', url: `${id}`, data });
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+  update = (id: string | number, data: RequestData) => {
+    return this.apiRequest({ method: 'PUT', url: `${id}`, data });
   };
 
-  upsertSubaccount = async (id: string | number, data: RequestData) => {
-    try {
-      id = id.toString();
-      const result = await this.paystackClient({ method: 'POST', url: `${id}/subaccount/add`, data });
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+  upsertSubaccount = (id: string | number, data: RequestData) => {
+    return this.apiRequest({ method: 'POST', url: `${id}/subaccount/add`, data });
   };
 
-  removeSubaccount = async (id: string | number, data: { subaccount: string }) => {
-    try {
-      id = id.toString();
-      const result = await this.paystackClient({ method: 'POST', url: `${id}/subaccount/remove`, data });
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+  removeSubaccount = (id: string | number, data: { subaccount: string }) => {
+    return this.apiRequest({ method: 'POST', url: `${id}/subaccount/remove`, data });
   };
 }
 

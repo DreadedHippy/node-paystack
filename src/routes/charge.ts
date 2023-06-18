@@ -1,6 +1,6 @@
-import { RequestData, RequestParams } from '../interfaces/request';
-import { AxiosInstance, AxiosError, AxiosResponse, CreateAxiosDefaults } from 'axios';
-import { SuccessResponse, ErrorResponse, AllResponse } from '../interfaces/response';
+import { RequestData } from '../interfaces/request';
+import { AxiosInstance, AxiosError, CreateAxiosDefaults, AxiosRequestConfig } from 'axios';
+import { AllResponse } from '../interfaces/response';
 import { baseURL } from '../static/variables';
 import { createAxiosInstance } from '../utils/utils';
 
@@ -8,70 +8,48 @@ class Charge {
 	private paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
   constructor(private axiosConfig: CreateAxiosDefaults) {
     this.paystackClient.defaults.baseURL = baseURL + 'charge';
-  }
-
-	create = async (data: RequestData) => {
-    try {
-      const result = await this.paystackClient({ method: 'POST', data });
+  }  
+	
+	private apiRequest = async (requestConfig: AxiosRequestConfig) => {
+		try {
+      const result = await this.paystackClient(requestConfig);
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
+			// console.log(error)
+			let errorData = error.response?.data || error.cause  as AllResponse;
+			error.response?.data == undefined ? errorData = {error : "Data not received", cause: error.cause} :
+			errorData.httpStatus = {statusCode: error.response?.status, statusMessage: error.response?.statusText};
+      return errorData; // The data in the response of the axios error
     }
+	}
+
+	create = (data: RequestData) => {
+    return this.apiRequest({ method: 'POST', data });
   };
 
-	submitPin = async (data: {pin: string, reference: string}) => {
-    try {
-      const result = await this.paystackClient({ method: 'POST', data, url: `submit_pin` });
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+	submitPin = (data: {pin: string, reference: string}) => {
+    return this.apiRequest({ method: 'POST', data, url: `submit_pin` });
   };
 
 
-	submitOTP = async (data: {otp: string, reference: string}) => {
-    try {
-      const result = await this.paystackClient({ method: 'POST', data, url: `submit_otp` });
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+	submitOTP = (data: {otp: string, reference: string}) => {
+    return this.apiRequest({ method: 'POST', data, url: `submit_otp` });
   };
 
-	submitPhone = async (data: {phone: string, reference: string}) => {
-    try {
-      const result = await this.paystackClient({ method: 'POST', data, url: `submit_phone` });
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+	submitPhone = (data: {phone: string, reference: string}) => {
+    return this.apiRequest({ method: 'POST', data, url: `submit_phone` });
   };
 
-	submitBirthday = async (data: {birthday: `${number}${number}${number}${number}-${number}${number}-${number}${number}`, reference: string}) => {
-    try {
-      const result = await this.paystackClient({ method: 'POST', data, url: `submit_birthday` });
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+	submitBirthday = (data: {birthday: `${number}${number}${number}${number}-${number}${number}-${number}${number}`, reference: string}) => {
+    return this.apiRequest({ method: 'POST', data, url: `submit_birthday` });
   };
 
-	submitAddress = async (data: {address: string, city: string, state: string, zip_code: string, reference: string}) => {
-    try {
-      const result = await this.paystackClient({ method: 'POST', data, url: `submit_address` });
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+	submitAddress = (data: {address: string, city: string, state: string, zip_code: string, reference: string}) => {
+    return this.apiRequest({ method: 'POST', data, url: `submit_address` });
   };
 
-	checkPending = async (reference: string) => {
-    try {
-      const result = await this.paystackClient({ method: 'GET', url: `${reference}` });
-      return result.data; // The data in the axios response
-    } catch (error: any | AxiosError) {
-      return error.response?.data || error.cause as AllResponse; // The data in the response of the axios error
-    }
+	checkPending = (reference: string) => {
+    return this.apiRequest({ method: 'GET', url: `${reference}` });
   };
 
 }
