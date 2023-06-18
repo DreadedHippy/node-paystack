@@ -21,6 +21,7 @@ import Integration from './routes/integration';
 import Charge from './routes/charge';
 import Dispute from './routes/dispute';
 import Refund from './routes/refund';
+import ApplePay from './routes/apple_pay';
 
 class Paystack {
   constructor(private key: string) {}
@@ -54,6 +55,7 @@ class Paystack {
   charge = new Charge(this.axiosConfig);
   dispute = new Dispute(this.axiosConfig);
   refund = new Refund(this.axiosConfig);
+  applePay = new ApplePay(this.axiosConfig);
   
 }
 
