@@ -13,6 +13,7 @@ describe('Split tests', () => {
           expect.objectContaining({
             status: false,
             message: expect.any(String),
+            httpStatus: expect.any(Object),
           }),
         );
       });
@@ -22,13 +23,14 @@ describe('Split tests', () => {
     paystack.split
       .update(760472, { name: 'Numbered ID' })
       .then((result) => {
-        expect(result.data.name).toBe('Updated name');
+        expect(result.data.name).toBe('Numbered ID');
       })
       .catch((error) => {
         expect(error).toEqual(
           expect.objectContaining({
             status: false,
             message: expect.any(String),
+            httpStatus: expect.any(Object),
           }),
         );
       });
@@ -45,6 +47,7 @@ describe('Split tests', () => {
           expect.objectContaining({
             status: false,
             message: expect.any(String),
+            httpStatus: expect.any(Object),
           }),
         );
       });
@@ -61,6 +64,7 @@ describe('Split tests', () => {
           expect.objectContaining({
             status: false,
             message: expect.any(String),
+            httpStatus: expect.any(Object),
           }),
         );
       });
