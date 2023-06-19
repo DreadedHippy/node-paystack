@@ -2,8 +2,7 @@ interface BaseRequest {
   [key: string]: string | number | undefined | boolean | object;
 }
 
-
-//For "POST", "PUSH" and other non-GET requests
+// For "POST", "PUSH" and other non-GET requests
 export interface RequestData extends BaseRequest {
   email?: string;
   amount?: number;
@@ -24,11 +23,11 @@ export interface RequestData extends BaseRequest {
   bearer_subaccount?: string;
   active?: boolean;
   share?: number;
-  action?: 'process' | 'view' | 'print'
+  action?: 'process' | 'view' | 'print';
   data?: {
     id?: string;
-    reference?: string
-  }
+    reference?: string;
+  };
   address?: string;
   serial_number?: string;
   first_name?: string;
@@ -39,7 +38,7 @@ export interface RequestData extends BaseRequest {
   bvn?: string;
   bank_code?: string;
   account_number?: string;
-  middle_name?: string
+  middle_name?: string;
   customer?: string;
   risk_action?: 'default' | 'allow' | 'deny';
   business_name?: string;
@@ -70,7 +69,7 @@ export interface RequestData extends BaseRequest {
   has_invoice?: boolean;
   invoice_number?: string;
   batch?: object[];
-  source?: "balance";
+  source?: 'balance';
   recipient?: string;
   reason?: string;
   transfer_code?: string;
@@ -90,11 +89,9 @@ export interface RequestData extends BaseRequest {
   transaction?: string;
   customer_note?: string;
   merchant_note?: string;
-
-
 }
 
-//For GET requests
+// For GET requests
 export interface RequestParams extends BaseRequest {
   perPage?: number;
   page?: number;

@@ -3,16 +3,16 @@ interface BaseRequest {
 }
 
 export interface CustomerRouteRequestData extends BaseRequest {
-	email: string;
-	first_name: string;
-	last_name: string;
-	phone?: string;
-	metadata?: object;
+  email: string;
+  first_name: string;
+  last_name: string;
+  phone?: string;
+  metadata?: object;
 }
 
 export interface CustomerRouteRequestParams extends BaseRequest {
-	perPage?: number;
-	page?: number;
-	from?: string;
-	to?: string;
+  perPage?: number;
+  page?: number;
+  from?: string;
+  to?: string;
 }

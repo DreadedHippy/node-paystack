@@ -5,24 +5,25 @@ import { baseURL } from '../static/variables';
 import { createAxiosInstance } from '../utils/utils';
 
 class Transaction {
-	private paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
+  private paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
   constructor(private axiosConfig: CreateAxiosDefaults) {
     this.paystackClient.defaults.baseURL = baseURL + 'transaction';
   }
-  
-	private apiRequest = async (requestConfig: AxiosRequestConfig) => {
-		try {
+
+  private apiRequest = async (requestConfig: AxiosRequestConfig) => {
+    try {
       const result = await this.paystackClient(requestConfig);
       return result.data; // The data in the axios response
     } catch (error: any | AxiosError) {
-			// console.log(error)
-			let errorData = error.response?.data || error.cause  as AllResponse;
-			error.response?.data == undefined ? errorData = {error : "Data not received", cause: error.cause} :
-			errorData.httpStatus = {statusCode: error.response?.status, statusMessage: error.response?.statusText};
+      // console.log(error)
+      let errorData = error.response?.data || (error.cause as AllResponse);
+      error.response?.data === undefined
+        ? (errorData = { error: 'Data not received', cause: error.cause })
+        : (errorData.httpStatus = { statusCode: error.response?.status, statusMessage: error.response?.statusText });
       return errorData; // The data in the response of the axios error
     }
-	}
-  
+  };
+
   initialize = async (data: RequestData) => {
     return this.apiRequest({ method: 'POST', data, url: `initialize` });
   };
@@ -32,11 +33,11 @@ class Transaction {
   };
 
   list = async (params?: RequestParams) => {
-    return this.apiRequest({ method: 'GET', params});
+    return this.apiRequest({ method: 'GET', params });
   };
 
   fetch = async (id: number) => {
-    return this.apiRequest({ method: 'GET', url: `${id}`});
+    return this.apiRequest({ method: 'GET', url: `${id}` });
   };
 
   chargeAuthorization = async (data: RequestData) => {
@@ -58,7 +59,6 @@ class Transaction {
   partialDebit = async (data: RequestData) => {
     return this.apiRequest({ method: 'POST', url: `partial_debit`, data });
   };
-  
 }
 
 export default Transaction;

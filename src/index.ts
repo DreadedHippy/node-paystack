@@ -29,9 +29,9 @@ class Paystack {
     baseURL,
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${this.key}`
+      Authorization: `Bearer ${this.key}`,
     },
-  }
+  };
 
   transaction = new Transaction(this.axiosConfig);
   split = new Split(this.axiosConfig);
@@ -56,7 +56,6 @@ class Paystack {
   dispute = new Dispute(this.axiosConfig);
   refund = new Refund(this.axiosConfig);
   applePay = new ApplePay(this.axiosConfig);
-  
 }
 
 function node_paystack(key: string) {
