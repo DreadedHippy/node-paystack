@@ -22,9 +22,10 @@ import Charge from './routes/charge';
 import Dispute from './routes/dispute';
 import Refund from './routes/refund';
 import ApplePay from './routes/apple_pay';
+import { ClientConfig } from './interfaces/global';
 
 class Paystack {
-  constructor(private key: string) {}
+  constructor(private key: string, private config: ClientConfig) {}
   private axiosConfig = {
     baseURL,
     headers: {
@@ -33,33 +34,36 @@ class Paystack {
     },
   };
 
-  transaction = new Transaction(this.axiosConfig);
-  split = new Split(this.axiosConfig);
-  terminal = new Terminal(this.axiosConfig);
-  subaccount = new Subaccount(this.axiosConfig);
-  plan = new Plan(this.axiosConfig);
-  customer = new Customer(this.axiosConfig);
-  miscellaneous = new Miscellaneous(this.axiosConfig);
-  verification = new Verification(this.axiosConfig);
-  dedicatedAccount = new DedicatedAccount(this.axiosConfig);
-  subscription = new Subscription(this.axiosConfig);
-  product = new Product(this.axiosConfig);
-  paymentPage = new Page(this.axiosConfig);
-  paymentRequest = new PaystackPaymentRequest(this.axiosConfig);
-  settlement = new Settlement(this.axiosConfig);
-  transferRecipient = new TransferRecipient(this.axiosConfig);
-  transfer = new Transfer(this.axiosConfig);
-  transfersControl = new TransfersControl(this.axiosConfig);
-  bulkCharge = new BulkCharge(this.axiosConfig);
-  integration = new Integration(this.axiosConfig);
-  charge = new Charge(this.axiosConfig);
-  dispute = new Dispute(this.axiosConfig);
-  refund = new Refund(this.axiosConfig);
-  applePay = new ApplePay(this.axiosConfig);
+  transaction = new Transaction(this.axiosConfig, this.config);
+  split = new Split(this.axiosConfig, this.config);
+  terminal = new Terminal(this.axiosConfig, this.config);
+  subaccount = new Subaccount(this.axiosConfig, this.config);
+  plan = new Plan(this.axiosConfig, this.config);
+  customer = new Customer(this.axiosConfig, this.config);
+  miscellaneous = new Miscellaneous(this.axiosConfig, this.config);
+  verification = new Verification(this.axiosConfig, this.config);
+  dedicatedAccount = new DedicatedAccount(this.axiosConfig, this.config);
+  subscription = new Subscription(this.axiosConfig, this.config);
+  product = new Product(this.axiosConfig, this.config);
+  paymentPage = new Page(this.axiosConfig, this.config);
+  paymentRequest = new PaystackPaymentRequest(this.axiosConfig, this.config);
+  settlement = new Settlement(this.axiosConfig, this.config);
+  transferRecipient = new TransferRecipient(this.axiosConfig, this.config);
+  transfer = new Transfer(this.axiosConfig, this.config);
+  transfersControl = new TransfersControl(this.axiosConfig, this.config);
+  bulkCharge = new BulkCharge(this.axiosConfig, this.config);
+  integration = new Integration(this.axiosConfig, this.config);
+  charge = new Charge(this.axiosConfig, this.config);
+  dispute = new Dispute(this.axiosConfig, this.config);
+  refund = new Refund(this.axiosConfig, this.config);
+  applePay = new ApplePay(this.axiosConfig, this.config);
 }
 
-function node_paystack(key: string) {
-  return new Paystack(key);
+function node_paystack(key: string, config: ClientConfig = {showRaw: false, hideHttpErrorStatus: false}) {
+  config.showRaw ? config.showRaw : config.showRaw = false;
+  config.hideHttpErrorStatus ? config.hideHttpErrorStatus : config.hideHttpErrorStatus = false;
+  
+  return new Paystack(key, config);
 }
 
 export default node_paystack;
