@@ -1,9 +1,7 @@
 import { AxiosInstance, AxiosError, CreateAxiosDefaults, AxiosRequestConfig } from 'axios';
 import { createAxiosInstance } from '../utils/utils';
 import { baseURL } from '../static/variables';
-import { RequestData, RequestParams } from '../interfaces/request';
-import { AllResponse } from '../interfaces/response';
-import { CustomerRouteRequestData, CustomerRouteRequestParams } from '../interfaces/customer.request';
+import { CustomerCreateRequestData, CustomerDeactivateAuthorizationRequestData, CustomerListRequestParams, CustomerSetRiskActionRequestData, CustomerUpdateRequestData, CustomerValidateRequestData } from '../interfaces/customer.request';
 import { ClientConfig } from '../interfaces/global';
 
 class Customer {
@@ -31,11 +29,11 @@ class Customer {
     }
   };
 
-  create = (data: CustomerRouteRequestData) => {
+  create = (data: CustomerCreateRequestData) => {
     return this.apiRequest({ method: 'POST', data });
   };
 
-  list = (params?: CustomerRouteRequestParams) => {
+  list = (params?: CustomerListRequestParams) => {
     return this.apiRequest({ method: 'GET', params });
   };
 
@@ -43,19 +41,19 @@ class Customer {
     return this.apiRequest({ method: 'GET', url: `${emailOrCode}` });
   };
 
-  update = (code: string, data: Partial<CustomerRouteRequestData>) => {
+  update = (code: string, data: CustomerUpdateRequestData) => {
     return this.apiRequest({ method: 'PUT', url: `${code}`, data });
   };
 
-  validate = (emailOrCode: string, data: RequestData) => {
+  validate = (emailOrCode: string, data: CustomerValidateRequestData) => {
     return this.apiRequest({ method: 'POST', url: `${emailOrCode}/identification`, data });
   };
 
-  setRiskAction = (data: RequestData) => {
+  setRiskAction = (data: CustomerSetRiskActionRequestData) => {
     return this.apiRequest({ method: 'POST', url: `set_risk_action`, data });
   };
 
-  deactivateAuthorization = (data: RequestData) => {
+  deactivateAuthorization = (data: CustomerDeactivateAuthorizationRequestData) => {
     return this.apiRequest({ method: 'POST', url: `deactivate_authorization`, data });
   };
 }

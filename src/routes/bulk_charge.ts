@@ -1,9 +1,8 @@
-import { RequestParams } from '../interfaces/request';
 import { AxiosInstance, AxiosError, CreateAxiosDefaults, AxiosRequestConfig } from 'axios';
-import { AllResponse } from '../interfaces/response';
 import { baseURL } from '../static/variables';
 import { createAxiosInstance } from '../utils/utils';
 import { ClientConfig } from '../interfaces/global';
+import { BulkChargeFetchChargeRequestParams, BulkChargeInitiateRequestData, BulkChargeListRequestParams } from '../interfaces/bulk_charge.request';
 
 class BulkCharge {
   private paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
@@ -30,11 +29,11 @@ class BulkCharge {
     }
   };
 
-  initiate = (data: { authorization: string; amount: number; reference: string }[]) => {
+  initiate = (data: BulkChargeInitiateRequestData[]) => {
     return this.apiRequest({ method: 'POST', data });
   };
 
-  list = (params?: RequestParams) => {
+  list = (params?: BulkChargeListRequestParams) => {
     return this.apiRequest({ method: 'GET', params });
   };
 
@@ -42,7 +41,7 @@ class BulkCharge {
     return this.apiRequest({ method: 'GET', url: `${batchIdOrCode}` });
   };
 
-  fetchCharges = (batchIdOrCode: string, params?: RequestParams) => {
+  fetchCharges = (batchIdOrCode: string, params?: BulkChargeFetchChargeRequestParams) => {
     return this.apiRequest({ method: 'GET', url: `${batchIdOrCode}/charges`, params });
   };
 
