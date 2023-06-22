@@ -3,6 +3,7 @@ import { AllResponse } from '../interfaces/response';
 import { baseURL } from '../static/variables';
 import { createAxiosInstance } from '../utils/utils';
 import { ClientConfig } from '../interfaces/global';
+import { ApplePayListDomainsRequestParams, ApplePayRegisterDomainRequestData, ApplePayUnregisterDomainRequestData } from '../interfaces/apple_pay.request';
 
 class ApplePay {
   private paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
@@ -28,15 +29,15 @@ class ApplePay {
     }
   };
 
-  registerDomain = (data: { domainName: string }) => {
+  registerDomain = (data: ApplePayRegisterDomainRequestData) => {
     return this.apiRequest({ method: 'POST', data, url: `domain` });
   };
 
-  listDomains = () => {
-    return this.apiRequest({ method: 'GET', url: `domain` });
+  listDomains = (params?: ApplePayListDomainsRequestParams) => {
+    return this.apiRequest({ method: 'GET', url: `domain`, params });
   };
 
-  unregisterDomain = (data: { domainName: string }) => {
+  unregisterDomain = (data: ApplePayUnregisterDomainRequestData) => {
     return this.apiRequest({ method: 'DELETE', data, url: `domain` });
   };
 }

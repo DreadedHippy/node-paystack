@@ -1,9 +1,8 @@
-import { RequestData, RequestParams } from '../interfaces/request';
-import { AxiosInstance, AxiosError, AxiosResponse, CreateAxiosDefaults, AxiosRequestConfig } from 'axios';
-import { SuccessResponse, ErrorResponse, AllResponse } from '../interfaces/response';
+import { AxiosInstance, AxiosError, CreateAxiosDefaults, AxiosRequestConfig } from 'axios';
 import { baseURL } from '../static/variables';
 import { createAxiosInstance } from '../utils/utils';
 import { ClientConfig } from '../interfaces/global';
+import { TransactionChargeAuthorizationRequestData, TransactionExportRequestParams, TransactionInitializeRequestData, TransactionListRequestParams, TransactionPartialDebitRequestData, TransactionTotalsRequestParams } from '../interfaces/transaction.request';
 
 class Transaction {
   private paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
@@ -29,23 +28,23 @@ class Transaction {
     }
   };
 
-  initialize = async (data: RequestData) => {
+  initialize = (data: TransactionInitializeRequestData) => {
     return this.apiRequest({ method: 'POST', data, url: `initialize` });
   };
 
-  verify = async (reference: string) => {
+  verify = (reference: string) => {
     return this.apiRequest({ method: 'GET', url: `verify/${reference}` });
   };
 
-  list = async (params?: RequestParams) => {
+  list = (params?: TransactionListRequestParams) => {
     return this.apiRequest({ method: 'GET', params });
   };
 
-  fetch = async (id: number) => {
+  fetch = (id: number) => {
     return this.apiRequest({ method: 'GET', url: `${id}` });
   };
 
-  chargeAuthorization = async (data: RequestData) => {
+  chargeAuthorization = (data: TransactionChargeAuthorizationRequestData) => {
     return this.apiRequest({ method: 'POST', data, url: `charge_authorization` });
   };
 
@@ -53,15 +52,15 @@ class Transaction {
     return this.apiRequest({ method: 'GET', url: `timeline/${idOrReference.toString()}` });
   };
 
-  totals = async (params: RequestParams) => {
+  totals = (params: TransactionTotalsRequestParams) => {
     return this.apiRequest({ method: 'GET', url: `totals`, params });
   };
 
-  export = async (params: RequestParams) => {
+  export = (params: TransactionExportRequestParams) => {
     return this.apiRequest({ method: 'GET', url: `export`, params });
   };
 
-  partialDebit = async (data: RequestData) => {
+  partialDebit = (data: TransactionPartialDebitRequestData) => {
     return this.apiRequest({ method: 'POST', url: `partial_debit`, data });
   };
 }

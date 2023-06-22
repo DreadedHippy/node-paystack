@@ -1,9 +1,8 @@
 import { AxiosInstance, AxiosError, CreateAxiosDefaults, AxiosRequestConfig } from 'axios';
 import { baseURL } from '../static/variables';
-import { RequestData, RequestParams } from '../interfaces/request';
-import { AllResponse } from '../interfaces/response';
 import { createAxiosInstance } from '../utils/utils';
 import { ClientConfig } from '../interfaces/global';
+import { TerminalListRequestParams, TerminalSendEventRequestData, TerminalUpdateRequestData } from '../interfaces/terminal.request';
 
 class Terminal {
   private paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
@@ -30,7 +29,7 @@ class Terminal {
     }
   };
 
-  sendEvent = (terminalId: string, data: RequestData) => {
+  sendEvent = (terminalId: string, data: TerminalSendEventRequestData) => {
     return this.apiRequest({ method: 'POST', data, url: `${terminalId}/event` });
   };
 
@@ -42,7 +41,7 @@ class Terminal {
     return this.apiRequest({ method: 'GET', url: `${terminalId}/presence` });
   };
 
-  list = (params?: RequestParams) => {
+  list = (params?: TerminalListRequestParams) => {
     return this.apiRequest({ method: 'GET', params });
   };
 
@@ -50,7 +49,7 @@ class Terminal {
     return this.apiRequest({ method: 'GET', url: `${terminalId}` });
   };
 
-  update = (terminalId: string, data: RequestData) => {
+  update = (terminalId: string, data: TerminalUpdateRequestData) => {
     return this.apiRequest({ method: 'PUT', url: `${terminalId}`, data });
   };
 

@@ -1,7 +1,6 @@
 import { AxiosInstance, AxiosError, CreateAxiosDefaults, AxiosRequestConfig } from 'axios';
 import { baseURL } from '../static/variables';
-import { AllResponse } from '../interfaces/response';
-import { VerificationRouteRequestData } from '../interfaces/verification.request';
+import { VerificationResolveAccountRequestParams, VerificationValidateAccountRequestData } from '../interfaces/verification.request';
 import { createAxiosInstance } from '../utils/utils';
 import { ClientConfig } from '../interfaces/global';
 
@@ -30,14 +29,14 @@ class Verification {
     }
   };
 
-  resolveAccount = async (params: { account_number: string; bank_code: string }) => {
+  resolveAccount = async (params: VerificationResolveAccountRequestParams) => {
     return this.apiRequest({
       method: 'GET',
       url: `bank/resolve?account_number=${params.account_number}&bank_code=${params.bank_code}`,
     });
   };
 
-  validateAccount = async (data: VerificationRouteRequestData) => {
+  validateAccount = async (data: VerificationValidateAccountRequestData) => {
     return this.apiRequest({ method: 'POST', url: `bank/validate`, data });
   };
 

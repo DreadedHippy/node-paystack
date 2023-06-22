@@ -1,12 +1,12 @@
 import { AxiosInstance, AxiosError, CreateAxiosDefaults, AxiosRequestConfig } from 'axios';
 import { baseURL } from '../static/variables';
-import { RequestData, RequestParams } from '../interfaces/request';
-import { AllResponse } from '../interfaces/response';
 import { createAxiosInstance } from '../utils/utils';
 import { ClientConfig } from '../interfaces/global';
+import { TransferBulkInitiateRequestData, TransferFinalizeRequestData, TransferInitiateRequestData, TransfersListRequestParams } from '../interfaces/transfer.request';
 
 class Transfer {
   private paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
+  
   constructor(
     private axiosConfig: CreateAxiosDefaults,
     private clientConfig: ClientConfig
@@ -30,27 +30,27 @@ class Transfer {
     }
   };
 
-  initiate = async (data: RequestData) => {
+  initiate = (data: TransferInitiateRequestData) => {
     return this.apiRequest({ method: 'POST', data });
   };
 
-  finalize = async (data: RequestData) => {
+  finalize = (data: TransferFinalizeRequestData) => {
     return this.apiRequest({ method: 'POST', data, url: 'finalize_transfer' });
   };
 
-  bulkInitiate = async (data: RequestData) => {
+  bulkInitiate = (data: TransferBulkInitiateRequestData) => {
     return this.apiRequest({ method: 'POST', data, url: 'bulk' });
   };
 
-  list = async (params?: RequestParams) => {
+  list = (params?: TransfersListRequestParams) => {
     return this.apiRequest({ method: 'GET', params });
   };
 
-  fetch = async (idOrCode: string) => {
+  fetch = (idOrCode: string) => {
     return this.apiRequest({ method: 'GET', url: `${idOrCode}` });
   };
 
-  verify = async (reference: string) => {
+  verify = (reference: string) => {
     return this.apiRequest({ method: 'GET', url: `verify/${reference}` });
   };
 }

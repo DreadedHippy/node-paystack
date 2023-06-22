@@ -1,9 +1,8 @@
 import { AxiosInstance, AxiosError, CreateAxiosDefaults, AxiosRequestConfig } from 'axios';
 import { baseURL } from '../static/variables';
-import { RequestData, RequestParams } from '../interfaces/request';
-import { AllResponse } from '../interfaces/response';
 import { createAxiosInstance } from '../utils/utils';
 import { ClientConfig } from '../interfaces/global';
+import { TransferRecipientBulkCreateRequestData, TransferRecipientCreateRequestData, TransferRecipientListRequestParams, TransferRecipientUpdateRequestData } from '../interfaces/transfer_recipient.request';
 
 class TransferRecipient {
   private paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
@@ -30,27 +29,27 @@ class TransferRecipient {
     }
   };
 
-  create = async (data: RequestData) => {
+  create = (data: TransferRecipientCreateRequestData) => {
     return this.apiRequest({ method: 'POST', data });
   };
 
-  bulkCreate = async (data: RequestData) => {
+  bulkCreate = (data: TransferRecipientBulkCreateRequestData) => {
     return this.apiRequest({ method: 'POST', data, url: 'bulk' });
   };
 
-  list = async (params?: RequestParams) => {
+  list = (params?: TransferRecipientListRequestParams) => {
     return this.apiRequest({ method: 'GET', params });
   };
 
-  fetch = async (idOrCode: string) => {
+  fetch = (idOrCode: string) => {
     return this.apiRequest({ method: 'GET', url: `${idOrCode}` });
   };
 
-  update = async (idOrCode: string, data: RequestData) => {
+  update = (idOrCode: string, data: TransferRecipientUpdateRequestData) => {
     return this.apiRequest({ method: 'PUT', url: `${idOrCode}`, data });
   };
 
-  delete = async (idOrCode: string) => {
+  delete = (idOrCode: string) => {
     return this.apiRequest({ method: 'DELETE', url: `${idOrCode}` });
   };
 }

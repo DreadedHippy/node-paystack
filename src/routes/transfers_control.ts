@@ -1,9 +1,8 @@
 import { AxiosInstance, AxiosError, CreateAxiosDefaults, AxiosRequestConfig } from 'axios';
 import { baseURL } from '../static/variables';
-import { RequestData, RequestParams } from '../interfaces/request';
-import { AllResponse } from '../interfaces/response';
 import { createAxiosInstance } from '../utils/utils';
 import { ClientConfig } from '../interfaces/global';
+import { TransfersControlFinalizeDisableOTPRequestData, TransfersControlResendOTPRequestData } from '../interfaces/transfers_control.request';
 
 class TransfersControl {
   private paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
@@ -30,27 +29,27 @@ class TransfersControl {
     }
   };
 
-  checkBalance = async () => {
+  checkBalance = () => {
     return this.apiRequest({ method: 'GET', url: 'balance' });
   };
 
-  fetchBalanceLedger = async () => {
+  fetchBalanceLedger = () => {
     return this.apiRequest({ method: 'GET', url: 'balance/ledger' });
   };
 
-  resendOTP = async (data: RequestData) => {
+  resendOTP = (data: TransfersControlResendOTPRequestData) => {
     return this.apiRequest({ method: 'POST', url: 'transfer/resend_otp', data });
   };
 
-  disableOTP = async () => {
+  disableOTP = () => {
     return this.apiRequest({ method: 'POST', url: 'transfer/disable_otp' });
   };
 
-  finalizeDisableOTP = async (data: { otp: string }) => {
+  finalizeDisableOTP = (data: TransfersControlFinalizeDisableOTPRequestData) => {
     return this.apiRequest({ method: 'POST', url: 'transfer/disable_otp_finalize', data });
   };
 
-  enableOTP = async () => {
+  enableOTP = () => {
     return this.apiRequest({ method: 'POST', url: 'transfer/enable_otp' });
   };
 }
