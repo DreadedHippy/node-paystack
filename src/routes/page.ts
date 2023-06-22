@@ -1,9 +1,8 @@
 import { AxiosInstance, AxiosError, CreateAxiosDefaults, AxiosRequestConfig } from 'axios';
 import { baseURL } from '../static/variables';
-import { RequestData, RequestParams } from '../interfaces/request';
-import { AllResponse } from '../interfaces/response';
 import { createAxiosInstance } from '../utils/utils';
 import { ClientConfig } from '../interfaces/global';
+import { PageAddProductsRequestData, PageCreateRequestData, PageListRequestParams, PageUpdateRequestData } from '../interfaces/page.request';
 
 class Page {
   private paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
@@ -30,11 +29,11 @@ class Page {
     }
   };
 
-  create = (data: RequestData) => {
+  create = (data: PageCreateRequestData) => {
     return this.apiRequest({ method: 'POST', data });
   };
 
-  list = (params?: RequestParams) => {
+  list = (params?: PageListRequestParams) => {
     return this.apiRequest({ method: 'GET', params });
   };
 
@@ -42,7 +41,7 @@ class Page {
     return this.apiRequest({ method: 'GET', url: `${idOrSlug}` });
   };
 
-  update = (idOrSlug: string, data: string) => {
+  update = (idOrSlug: string, data: PageUpdateRequestData) => {
     return this.apiRequest({ method: 'PUT', url: `${idOrSlug}`, data });
   };
 
@@ -50,8 +49,8 @@ class Page {
     return this.apiRequest({ method: 'GET', url: `check_slug_availability/${slug}` });
   };
 
-  addProducts = (pageId: string, productIds: string[] | number[]) => {
-    return this.apiRequest({ method: 'POST', url: `${pageId}/product`, data: { product: productIds } });
+  addProducts = (pageId: string, data: PageAddProductsRequestData) => {
+    return this.apiRequest({ method: 'POST', url: `${pageId}/product`, data });
   };
 }
 

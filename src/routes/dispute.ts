@@ -1,9 +1,8 @@
-import { RequestData, RequestParams } from '../interfaces/request';
-import { AxiosInstance, AxiosError, AxiosResponse, CreateAxiosDefaults, AxiosRequestConfig } from 'axios';
-import { SuccessResponse, ErrorResponse, AllResponse } from '../interfaces/response';
+import { AxiosInstance, AxiosError, CreateAxiosDefaults, AxiosRequestConfig } from 'axios';
 import { baseURL } from '../static/variables';
 import { createAxiosInstance } from '../utils/utils';
 import { ClientConfig } from '../interfaces/global';
+import { DisputeAddEvidenceRequestData, DisputeExportRequestParams, DisputeGetUploadURLRequestParams, DisputeListRequestParams, DisputeResolveRequestData, DisputeUpdateRequestData } from '../interfaces/dispute.request';
 
 class Dispute {
   private paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
@@ -30,7 +29,7 @@ class Dispute {
     }
   };
 
-  list = (params?: RequestParams) => {
+  list = (params?: DisputeListRequestParams) => {
     return this.apiRequest({ method: 'GET', params });
   };
 
@@ -42,23 +41,23 @@ class Dispute {
     return this.apiRequest({ method: 'GET', url: `transaction/${transactionId}` });
   };
 
-  update = (disputeId: string, data: { refund_amount: string; upload_filename?: string }) => {
+  update = (disputeId: string, data: DisputeUpdateRequestData) => {
     return this.apiRequest({ method: 'PUT', url: `${disputeId}`, data });
   };
 
-  addEvidence = (disputeId: string, data: RequestData) => {
+  addEvidence = (disputeId: string, data: DisputeAddEvidenceRequestData) => {
     return this.apiRequest({ method: 'POST', url: `${disputeId}/evidence`, data });
   };
 
-  getUploadURL = (disputeId: string, params: RequestParams) => {
+  getUploadURL = (disputeId: string, params: DisputeGetUploadURLRequestParams) => {
     return this.apiRequest({ method: 'GET', url: `${disputeId}/upload_url`, params });
   };
 
-  resolve = (disputeId: string, data: RequestData) => {
+  resolve = (disputeId: string, data: DisputeResolveRequestData) => {
     return this.apiRequest({ method: 'PUT', url: `${disputeId}/resolve`, data });
   };
 
-  export = (params: RequestParams) => {
+  export = (params?: DisputeExportRequestParams) => {
     return this.apiRequest({ method: 'GET', url: `export`, params });
   };
 }

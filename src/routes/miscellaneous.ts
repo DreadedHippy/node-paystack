@@ -38,6 +38,11 @@ class Miscellaneous {
     return this.apiRequest({ method: 'GET', url: 'country' });
   };
 
+  /**
+   * 
+   * @param countryCode {string} The country code of the country whose states you want to list
+   * @returns {Promise<AllResponse>}
+   */
   listStates = (countryCode: string) => {
     return this.apiRequest({ method: 'GET', url: `address_verification/states?country=${countryCode}` });
   };

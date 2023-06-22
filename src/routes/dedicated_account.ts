@@ -4,6 +4,7 @@ import { baseURL } from '../static/variables';
 import { RequestData, RequestParams } from '../interfaces/request';
 import { AllResponse } from '../interfaces/response';
 import { ClientConfig } from '../interfaces/global';
+import { DedicatedAccountAssignRequestData, DedicatedAccountCreateRequestData, DedicatedAccountListRequestParams, DedicatedAccountRemoveSplitRequestData, DedicatedAccountRequeryRequestParams, DedicatedAccountSplitAccountTransactionRequestData } from '../interfaces/dedicated_account.request';
 
 class DedicatedAccount {
   private paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
@@ -30,15 +31,15 @@ class DedicatedAccount {
     }
   };
 
-  create = (data: RequestData) => {
+  create = (data: DedicatedAccountCreateRequestData) => {
     return this.apiRequest({ method: 'POST', data });
   };
 
-  assign = (data: RequestData) => {
+  assign = (data: DedicatedAccountAssignRequestData) => {
     return this.apiRequest({ method: 'POST', data, url: 'assign' });
   };
 
-  list = (params?: RequestParams) => {
+  list = (params?: DedicatedAccountListRequestParams) => {
     return this.apiRequest({ method: 'GET', params });
   };
 
@@ -46,7 +47,7 @@ class DedicatedAccount {
     return this.apiRequest({ method: 'GET', url: `${dedicatedAccountId}` });
   };
 
-  requery = (params: { account_number: string; provider_slug: string; date?: string }) => {
+  requery = (params: DedicatedAccountRequeryRequestParams) => {
     return this.apiRequest({ method: 'GET', url: `requery`, params });
   };
 
@@ -54,11 +55,11 @@ class DedicatedAccount {
     return this.apiRequest({ method: 'DELETE', url: `${dedicatedAccountId}` });
   };
 
-  splitAccountTransaction = (data: RequestData) => {
+  splitAccountTransaction = (data: DedicatedAccountSplitAccountTransactionRequestData) => {
     return this.apiRequest({ method: 'POST', data });
   };
 
-  removeSplit = (data: { account_number: string }) => {
+  removeSplit = (data: DedicatedAccountRemoveSplitRequestData) => {
     return this.apiRequest({ method: 'DELETE', data, url: 'split' });
   };
 

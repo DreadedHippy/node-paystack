@@ -1,9 +1,9 @@
+import { PaymentRequestFinalizeRequestData, PaymentRequestUpdateRequestData } from './../interfaces/payment_request.request';
 import { AxiosInstance, AxiosError, CreateAxiosDefaults, AxiosRequestConfig } from 'axios';
 import { baseURL } from '../static/variables';
-import { RequestData, RequestParams } from '../interfaces/request';
-import { AllResponse } from '../interfaces/response';
 import { createAxiosInstance } from '../utils/utils';
 import { ClientConfig } from '../interfaces/global';
+import { PaymentRequestCreateRequestData, PaymentRequestListRequestParams } from '../interfaces/payment_request.request';
 
 class PaymentRequest {
   private paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
@@ -30,11 +30,11 @@ class PaymentRequest {
     }
   };
 
-  create = (data: RequestData) => {
+  create = (data: PaymentRequestCreateRequestData) => {
     return this.apiRequest({ method: 'POST', data });
   };
 
-  list = (params?: RequestParams) => {
+  list = (params?: PaymentRequestListRequestParams) => {
     return this.apiRequest({ method: 'GET', params });
   };
 
@@ -54,15 +54,15 @@ class PaymentRequest {
     return this.apiRequest({ method: 'GET', url: `totals` });
   };
 
-  finalize = (idOrCode: string, sendNotification: boolean = true) => {
+  finalize = (idOrCode: string, data: PaymentRequestFinalizeRequestData) => {
     return this.apiRequest({
       method: 'POST',
       url: `finalize/${idOrCode}`,
-      data: { send_notification: sendNotification },
+      data,
     });
   };
 
-  update = (idOrCode: string, data: RequestData) => {
+  update = (idOrCode: string, data: PaymentRequestUpdateRequestData) => {
     return this.apiRequest({ method: 'PUT', url: `${idOrCode}`, data });
   };
 
