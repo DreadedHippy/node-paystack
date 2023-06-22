@@ -29,14 +29,29 @@ class ApplePay {
     }
   };
 
+  /**
+   * Register a top-level domain or subdomain for your Apple Pay integration.
+   * @param data The body of the API request
+   * @returns {Promise<any>}
+   */
   registerDomain = (data: ApplePayRegisterDomainRequestData) => {
     return this.apiRequest({ method: 'POST', data, url: `domain` });
   };
 
+  /**
+   * Lists all registered domains on your integration. Returns an empty array if no domains have been added.
+   * @param params The query parameters for the API request
+   * @returns {Promise<any>}
+   */
   listDomains = (params?: ApplePayListDomainsRequestParams) => {
     return this.apiRequest({ method: 'GET', url: `domain`, params });
   };
 
+  /**
+   * Unregister a top-level domain or subdomain previously used for your Apple Pay integration.
+   * @param data The body of the API request
+   * @returns {Promise<any>}
+   */
   unregisterDomain = (data: ApplePayUnregisterDomainRequestData) => {
     return this.apiRequest({ method: 'DELETE', data, url: `domain` });
   };
