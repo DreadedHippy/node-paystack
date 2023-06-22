@@ -1,8 +1,6 @@
 import { AxiosInstance, AxiosError, CreateAxiosDefaults, AxiosRequestConfig } from 'axios';
 import { baseURL } from '../static/variables';
-import { RequestData, RequestParams } from '../interfaces/request';
-import { AllResponse } from '../interfaces/response';
-import { CreatePlanRequestData } from '../interfaces/plan.request';
+import { PlanCreateRequestData, PlanListRequestParams, PlanUpdateRequestData } from '../interfaces/plan.request';
 import { createAxiosInstance } from '../utils/utils';
 import { ClientConfig } from '../interfaces/global';
 
@@ -31,11 +29,11 @@ class Plan {
     }
   };
 
-  create = (data: CreatePlanRequestData) => {
+  create = (data: PlanCreateRequestData) => {
     return this.apiRequest({ method: 'POST', data });
   };
 
-  list = (params?: RequestParams) => {
+  list = (params?: PlanListRequestParams) => {
     return this.apiRequest({ method: 'GET', params });
   };
 
@@ -43,7 +41,7 @@ class Plan {
     return this.apiRequest({ method: 'GET', url: `${idOrCode}` });
   };
 
-  update = (idOrCode: string, data: CreatePlanRequestData) => {
+  update = (idOrCode: string, data: PlanUpdateRequestData) => {
     return this.apiRequest({ method: 'PUT', url: `${idOrCode}`, data });
   };
 }

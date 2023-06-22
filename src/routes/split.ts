@@ -1,9 +1,8 @@
 import { AxiosInstance, AxiosError, CreateAxiosDefaults, AxiosRequestConfig } from 'axios';
 import { baseURL } from '../static/variables';
-import { RequestData, RequestParams } from '../interfaces/request';
-import { AllResponse } from '../interfaces/response';
 import { createAxiosInstance } from '../utils/utils';
 import { ClientConfig } from '../interfaces/global';
+import { SplitCreateRequestData, SplitListRequestParams, SplitUpdateRequestData, SplitUpsertSubaccountRequestData, SplitRemoveSubaccountRequestData } from '../interfaces/split.request';
 
 class Split {
   private paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
@@ -30,11 +29,11 @@ class Split {
     }
   };
 
-  create = (data: RequestData) => {
+  create = (data: SplitCreateRequestData) => {
     return this.apiRequest({ method: 'POST', data });
   };
 
-  list = (params?: RequestParams) => {
+  list = (params?: SplitListRequestParams) => {
     return this.apiRequest({ method: 'GET', params });
   };
 
@@ -42,15 +41,15 @@ class Split {
     return this.apiRequest({ method: 'GET', url: `${id}` });
   };
 
-  update = (id: string | number, data: RequestData) => {
+  update = (id: string | number, data: SplitUpdateRequestData) => {
     return this.apiRequest({ method: 'PUT', url: `${id}`, data });
   };
 
-  upsertSubaccount = (id: string | number, data: RequestData) => {
+  upsertSubaccount = (id: string | number, data: SplitUpsertSubaccountRequestData) => {
     return this.apiRequest({ method: 'POST', url: `${id}/subaccount/add`, data });
   };
 
-  removeSubaccount = (id: string | number, data: { subaccount: string }) => {
+  removeSubaccount = (id: string | number, data: SplitRemoveSubaccountRequestData) => {
     return this.apiRequest({ method: 'POST', url: `${id}/subaccount/remove`, data });
   };
 }

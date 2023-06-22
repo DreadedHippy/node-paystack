@@ -1,9 +1,8 @@
 import { AxiosInstance, AxiosError, CreateAxiosDefaults, AxiosRequestConfig } from 'axios';
 import { baseURL } from '../static/variables';
-import { RequestData, RequestParams } from '../interfaces/request';
-import { AllResponse } from '../interfaces/response';
 import { createAxiosInstance } from '../utils/utils';
 import { ClientConfig } from '../interfaces/global';
+import { SettlementListRequestParams, SettlementListTransactionsRequestParams } from '../interfaces/settlement.request';
 
 class Settlement {
   private paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
@@ -30,11 +29,11 @@ class Settlement {
     }
   };
 
-  list = (params?: RequestParams) => {
+  list = (params?: SettlementListRequestParams) => {
     return this.apiRequest({ method: 'GET', params });
   };
 
-  listTransactions = (settlementId: string, params?: RequestParams) => {
+  listTransactions = (settlementId: string, params?: SettlementListTransactionsRequestParams) => {
     return this.apiRequest({ method: 'GET', url: `${settlementId}/transactions`, params });
   };
 }

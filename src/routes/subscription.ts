@@ -1,9 +1,9 @@
 import { AxiosInstance, AxiosError, CreateAxiosDefaults, AxiosRequestConfig } from 'axios';
 import { createAxiosInstance } from '../utils/utils';
-import { baseURL } from '../static/variables';
-import { RequestData, RequestParams } from '../interfaces/request';
-import { AllResponse } from '../interfaces/response';
+import { baseURL } from '../static/variables';;
 import { ClientConfig } from '../interfaces/global';
+import { SubaccountCreateRequestData } from '../interfaces/subaccount.request';
+import { SubscriptionDisableRequestData, SubscriptionEnableRequestData, SubscriptionListRequestParams } from '../interfaces/subscription.request';
 
 class Subscription {
   private paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
@@ -30,11 +30,11 @@ class Subscription {
     }
   };
 
-  create = (data: RequestData) => {
+  create = (data: SubaccountCreateRequestData) => {
     return this.apiRequest({ method: 'POST', data });
   };
 
-  list = (params?: RequestParams) => {
+  list = (params?: SubscriptionListRequestParams) => {
     return this.apiRequest({ method: 'GET', params });
   };
 
@@ -42,11 +42,11 @@ class Subscription {
     return this.apiRequest({ method: 'GET', url: `${subscriptionIdOrCode}` });
   };
 
-  enable = (data: RequestData) => {
+  enable = (data: SubscriptionEnableRequestData) => {
     return this.apiRequest({ method: 'POST', url: `enable`, data });
   };
 
-  disable = (data: RequestData) => {
+  disable = (data: SubscriptionDisableRequestData) => {
     return this.apiRequest({ method: 'POST', url: `disable`, data });
   };
 

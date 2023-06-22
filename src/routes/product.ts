@@ -4,6 +4,7 @@ import { RequestData, RequestParams } from '../interfaces/request';
 import { AllResponse } from '../interfaces/response';
 import { createAxiosInstance } from '../utils/utils';
 import { ClientConfig } from '../interfaces/global';
+import { ProductCreateRequestData, ProductListRequestParams, ProductUpdateRequestData } from '../interfaces/product.request';
 
 class Product {
   private paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
@@ -30,11 +31,11 @@ class Product {
     }
   };
 
-  create = (data: RequestData) => {
+  create = (data: ProductCreateRequestData) => {
     return this.apiRequest({ method: 'POST', data });
   };
 
-  list = (params?: RequestParams) => {
+  list = (params?: ProductListRequestParams) => {
     return this.apiRequest({ method: 'GET', params });
   };
 
@@ -42,7 +43,7 @@ class Product {
     return this.apiRequest({ method: 'GET', url: `${productId}` });
   };
 
-  update = (productId: string, data: RequestData) => {
+  update = (productId: string, data: ProductUpdateRequestData) => {
     return this.apiRequest({ method: 'PUT', url: `${productId}`, data });
   };
 }

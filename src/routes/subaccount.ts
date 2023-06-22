@@ -1,10 +1,8 @@
 import { AxiosInstance, AxiosError, CreateAxiosDefaults, AxiosRequestConfig } from 'axios';
 import { createAxiosInstance } from '../utils/utils';
-
 import { baseURL } from '../static/variables';
-import { RequestData, RequestParams } from '../interfaces/request';
-import { AllResponse } from '../interfaces/response';
 import { ClientConfig } from '../interfaces/global';
+import { SubaccountCreateRequestData, SubaccountListRequestParams, SubaccountUpdateRequestData } from '../interfaces/subaccount.request';
 
 class Subaccount {
   private paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
@@ -31,11 +29,11 @@ class Subaccount {
     }
   };
 
-  create = (data: RequestData) => {
+  create = (data: SubaccountCreateRequestData) => {
     return this.apiRequest({ method: 'POST', data });
   };
 
-  list = (params?: RequestParams) => {
+  list = (params?: SubaccountListRequestParams) => {
     return this.apiRequest({ method: 'GET', params });
   };
 
@@ -43,7 +41,7 @@ class Subaccount {
     return this.apiRequest({ method: 'GET', url: `${idOrCode}` });
   };
 
-  update = (idOrCode: string, data: RequestData) => {
+  update = (idOrCode: string, data: SubaccountUpdateRequestData) => {
     return this.apiRequest({ method: 'PUT', url: `${idOrCode}`, data });
   };
 }
