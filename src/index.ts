@@ -198,4 +198,4 @@ function node_paystack(key: string, config: ClientConfig = { showRaw: false, hid
   return new Paystack(key, config);
 }
 
-export default node_paystack;
+export = node_paystack;

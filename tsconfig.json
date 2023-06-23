@@ -5,8 +5,9 @@
     "declaration": true,
     "outDir": "./lib",
     "strict": true,
-		"types": ["jest", "node"]
+		"types": ["jest", "node"],
+    "esModuleInterop": true
   },
   "include": ["src"],
-  "exclude": ["node_modules", "**/__tests__/*"]
+  "exclude": ["node_modules", "**/__tests__/*"],
 }
