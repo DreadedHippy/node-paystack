@@ -1,5 +1,5 @@
 {
-  "name": "node_paystack",
+  "name": "@aizon/node-paystack",
   "version": "1.0.0",
   "description": "A Node.JS API wrapper for paystack",
   "main": "lib/index.js",
