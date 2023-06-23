@@ -257,7 +257,7 @@ class DedicatedAccount {
 
   /**
    * @description Requery Dedicated Virtual Account for new transactions
-   * @param {DedicatedAccountRequeryRequestParams} params - The query parameters of the API request   *
+   * @param {DedicatedAccountRequeryRequestParams} params - The query parameters of the API request
    * @see {@link listProviders} method to get a list of all provider slugs
    * @example
    * Example usage of `requery` method

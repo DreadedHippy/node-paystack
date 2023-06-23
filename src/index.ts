@@ -188,7 +188,7 @@ class Paystack {
  * Properly sets up and returns a new instance of the Paystack API Wrapper class
  * @function
  * @param {string} key - Paystack API Key
- * @param {Object} config - Configuration options for the Paystack API Wrapper
+ * @param {ClientConfig} config - Configuration options for the Paystack API Wrapper
  * @returns {Paystack} A new instance of the Paystack API Wrapper class
  */
 function node_paystack(key: string, config: ClientConfig = { showRaw: false, hideHttpErrorStatus: false }) {
