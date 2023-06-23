@@ -2,14 +2,16 @@ import { AxiosInstance, AxiosError, CreateAxiosDefaults, AxiosRequestConfig } fr
 import { baseURL } from '../static/variables';
 import { createAxiosInstance } from '../utils/utils';
 import { ClientConfig } from '../interfaces/global';
-import { PageAddProductsRequestData, PageCreateRequestData, PageListRequestParams, PageUpdateRequestData } from '../interfaces/page.request';
+import {
+  PageAddProductsRequestData,
+  PageCreateRequestData,
+  PageListRequestParams,
+  PageUpdateRequestData,
+} from '../interfaces/page.request';
 
 class Page {
   private paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
-  constructor(
-    private axiosConfig: CreateAxiosDefaults,
-    private clientConfig: ClientConfig
-  ) {
+  constructor(private axiosConfig: CreateAxiosDefaults, private clientConfig: ClientConfig) {
     this.paystackClient.defaults.baseURL = baseURL + 'page';
   }
 
@@ -23,7 +25,7 @@ class Page {
       error.response?.data === undefined
         ? (errorData = { error: 'Data not received', cause: error.cause })
         : this.clientConfig.hideHttpErrorStatus
-        ? errorData = errorData
+        ? (errorData = errorData)
         : (errorData.httpStatus = { statusCode: error.response?.status, statusMessage: error.response?.statusText });
       return this.clientConfig.showRaw ? error : errorData; // The data in the response of the axios error
     }

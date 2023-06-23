@@ -2,14 +2,15 @@ import { AxiosInstance, AxiosError, CreateAxiosDefaults, AxiosRequestConfig } fr
 import { createAxiosInstance } from '../utils/utils';
 import { baseURL } from '../static/variables';
 import { ClientConfig } from '../interfaces/global';
-import { SubaccountCreateRequestData, SubaccountListRequestParams, SubaccountUpdateRequestData } from '../interfaces/subaccount.request';
+import {
+  SubaccountCreateRequestData,
+  SubaccountListRequestParams,
+  SubaccountUpdateRequestData,
+} from '../interfaces/subaccount.request';
 
 class Subaccount {
   private paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
-  constructor(
-    private axiosConfig: CreateAxiosDefaults,
-    private clientConfig: ClientConfig
-  ) {
+  constructor(private axiosConfig: CreateAxiosDefaults, private clientConfig: ClientConfig) {
     this.paystackClient.defaults.baseURL = baseURL + 'subaccount';
   }
 
@@ -23,7 +24,7 @@ class Subaccount {
       error.response?.data === undefined
         ? (errorData = { error: 'Data not received', cause: error.cause })
         : this.clientConfig.hideHttpErrorStatus
-        ? errorData = errorData
+        ? (errorData = errorData)
         : (errorData.httpStatus = { statusCode: error.response?.status, statusMessage: error.response?.statusText });
       return this.clientConfig.showRaw ? error : errorData; // The data in the response of the axios error
     }

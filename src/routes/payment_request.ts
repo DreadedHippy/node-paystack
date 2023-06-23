@@ -1,16 +1,19 @@
-import { PaymentRequestFinalizeRequestData, PaymentRequestUpdateRequestData } from './../interfaces/payment_request.request';
+import {
+  PaymentRequestFinalizeRequestData,
+  PaymentRequestUpdateRequestData,
+} from './../interfaces/payment_request.request';
 import { AxiosInstance, AxiosError, CreateAxiosDefaults, AxiosRequestConfig } from 'axios';
 import { baseURL } from '../static/variables';
 import { createAxiosInstance } from '../utils/utils';
 import { ClientConfig } from '../interfaces/global';
-import { PaymentRequestCreateRequestData, PaymentRequestListRequestParams } from '../interfaces/payment_request.request';
+import {
+  PaymentRequestCreateRequestData,
+  PaymentRequestListRequestParams,
+} from '../interfaces/payment_request.request';
 
 class PaymentRequest {
   private paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
-  constructor(
-    private axiosConfig: CreateAxiosDefaults,
-    private clientConfig: ClientConfig
-  ) {
+  constructor(private axiosConfig: CreateAxiosDefaults, private clientConfig: ClientConfig) {
     this.paystackClient.defaults.baseURL = baseURL + 'paymentrequest';
   }
 
@@ -24,7 +27,7 @@ class PaymentRequest {
       error.response?.data === undefined
         ? (errorData = { error: 'Data not received', cause: error.cause })
         : this.clientConfig.hideHttpErrorStatus
-        ? errorData = errorData
+        ? (errorData = errorData)
         : (errorData.httpStatus = { statusCode: error.response?.status, statusMessage: error.response?.statusText });
       return this.clientConfig.showRaw ? error : errorData; // The data in the response of the axios error
     }

@@ -2,14 +2,15 @@ import { AxiosInstance, AxiosError, CreateAxiosDefaults, AxiosRequestConfig } fr
 import { baseURL } from '../static/variables';
 import { createAxiosInstance } from '../utils/utils';
 import { ClientConfig } from '../interfaces/global';
-import { BulkChargeFetchChargeRequestParams, BulkChargeInitiateRequestData, BulkChargeListRequestParams } from '../interfaces/bulk_charge.request';
+import {
+  BulkChargeFetchChargeRequestParams,
+  BulkChargeInitiateRequestData,
+  BulkChargeListRequestParams,
+} from '../interfaces/bulk_charge.request';
 
 class BulkCharge {
   private paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
-  constructor(
-    private axiosConfig: CreateAxiosDefaults,
-    private clientConfig: ClientConfig
-  ) {
+  constructor(private axiosConfig: CreateAxiosDefaults, private clientConfig: ClientConfig) {
     this.paystackClient.defaults.baseURL = baseURL + 'bulkcharge';
   }
 
@@ -22,8 +23,8 @@ class BulkCharge {
       let errorData = error.response?.data || error.cause;
       error.response?.data === undefined
         ? (errorData = { error: 'Data not received', cause: error.cause })
-        : this.clientConfig.hideHttpErrorStatus        
-        ? errorData = errorData
+        : this.clientConfig.hideHttpErrorStatus
+        ? (errorData = errorData)
         : (errorData.httpStatus = { statusCode: error.response?.status, statusMessage: error.response?.statusText });
       return this.clientConfig.showRaw ? error : errorData; // The data in the response of the axios error
     }
@@ -36,7 +37,7 @@ class BulkCharge {
    * Example usage of `initiate` method
    *  ```js
    *  bulkCharge.initiate([
-   *     {"authorization": "AUTH_ncx8hews93", "amount": 2500, "reference": "dam1266638dhhd"}, 
+   *     {"authorization": "AUTH_ncx8hews93", "amount": 2500, "reference": "dam1266638dhhd"},
    *     {"authorization": "AUTH_xfuz7dy4b9", "amount": 1500, "reference": "dam1266638dhhe"}
    *  ])
    * .then(result => console.log(result))
@@ -68,7 +69,6 @@ class BulkCharge {
     return this.apiRequest({ method: 'POST', data });
   };
 
-  
   /**
    * @description This lists all bulk charge batches created by the integration. Statuses can be `active`, `paused`, or `complete`.
    * @param {object} params The query params of the API request
@@ -110,7 +110,6 @@ class BulkCharge {
     return this.apiRequest({ method: 'GET', params });
   };
 
-  
   /**
    * @description This endpoint retrieves a specific batch code. It also returns useful information on its progress by way of the `total_charges` and `pending_charges` attributes.
    * @param {string} batchIdOrCode - An ID or code for the charge whose batches you want to retrieve.
@@ -145,7 +144,6 @@ class BulkCharge {
     return this.apiRequest({ method: 'GET', url: `${batchIdOrCode}` });
   };
 
-  
   /**
    * @description This endpoint retrieves the charges associated with a specified batch code. Pagination parameters are available. You can also filter by status. Charge statuses can be `pending`, `success` or `failed`.
    * @param {string} batchIdOrCode - The batch Id or batch code of the required batch
@@ -297,7 +295,7 @@ class BulkCharge {
   fetchCharges = (batchIdOrCode: string, params?: BulkChargeFetchChargeRequestParams) => {
     return this.apiRequest({ method: 'GET', url: `${batchIdOrCode}/charges`, params });
   };
-  
+
   /**
    * @description Use this endpoint to pause processing a batch
    * @param {string} batchCode - The batch code of the required batch
@@ -323,7 +321,6 @@ class BulkCharge {
     return this.apiRequest({ method: 'GET', url: `pause/${batchCode}` });
   };
 
-  
   /**
    * @description Use this endpoint to resume processing a batch
    * @param {string} batchCode - The batch code of the required batch

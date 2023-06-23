@@ -1,16 +1,17 @@
 import { AxiosInstance, AxiosError, CreateAxiosDefaults, AxiosRequestConfig } from 'axios';
 import { createAxiosInstance } from '../utils/utils';
-import { baseURL } from '../static/variables';;
+import { baseURL } from '../static/variables';
 import { ClientConfig } from '../interfaces/global';
 import { SubaccountCreateRequestData } from '../interfaces/subaccount.request';
-import { SubscriptionDisableRequestData, SubscriptionEnableRequestData, SubscriptionListRequestParams } from '../interfaces/subscription.request';
+import {
+  SubscriptionDisableRequestData,
+  SubscriptionEnableRequestData,
+  SubscriptionListRequestParams,
+} from '../interfaces/subscription.request';
 
 class Subscription {
   private paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
-  constructor(
-    private axiosConfig: CreateAxiosDefaults,
-    private clientConfig: ClientConfig
-  ) {
+  constructor(private axiosConfig: CreateAxiosDefaults, private clientConfig: ClientConfig) {
     this.paystackClient.defaults.baseURL = baseURL + 'subscription';
   }
 
@@ -24,7 +25,7 @@ class Subscription {
       error.response?.data === undefined
         ? (errorData = { error: 'Data not received', cause: error.cause })
         : this.clientConfig.hideHttpErrorStatus
-        ? errorData = errorData
+        ? (errorData = errorData)
         : (errorData.httpStatus = { statusCode: error.response?.status, statusMessage: error.response?.statusText });
       return this.clientConfig.showRaw ? error : errorData; // The data in the response of the axios error
     }

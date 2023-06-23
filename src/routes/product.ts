@@ -4,14 +4,15 @@ import { RequestData, RequestParams } from '../interfaces/request';
 import { AllResponse } from '../interfaces/response';
 import { createAxiosInstance } from '../utils/utils';
 import { ClientConfig } from '../interfaces/global';
-import { ProductCreateRequestData, ProductListRequestParams, ProductUpdateRequestData } from '../interfaces/product.request';
+import {
+  ProductCreateRequestData,
+  ProductListRequestParams,
+  ProductUpdateRequestData,
+} from '../interfaces/product.request';
 
 class Product {
   private paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
-  constructor(
-    private axiosConfig: CreateAxiosDefaults,
-    private clientConfig: ClientConfig
-  ) {
+  constructor(private axiosConfig: CreateAxiosDefaults, private clientConfig: ClientConfig) {
     this.paystackClient.defaults.baseURL = baseURL + 'product';
   }
 
@@ -25,7 +26,7 @@ class Product {
       error.response?.data === undefined
         ? (errorData = { error: 'Data not received', cause: error.cause })
         : this.clientConfig.hideHttpErrorStatus
-        ? errorData = errorData
+        ? (errorData = errorData)
         : (errorData.httpStatus = { statusCode: error.response?.status, statusMessage: error.response?.statusText });
       return this.clientConfig.showRaw ? error : errorData; // The data in the response of the axios error
     }

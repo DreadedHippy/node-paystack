@@ -7,10 +7,7 @@ import { ClientConfig } from '../interfaces/global';
 
 class Miscellaneous {
   private paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
-  constructor(
-    private axiosConfig: CreateAxiosDefaults,
-    private clientConfig: ClientConfig
-  ) {
+  constructor(private axiosConfig: CreateAxiosDefaults, private clientConfig: ClientConfig) {
     this.paystackClient.defaults.baseURL = baseURL;
   }
 
@@ -24,7 +21,7 @@ class Miscellaneous {
       error.response?.data === undefined
         ? (errorData = { error: 'Data not received', cause: error.cause })
         : this.clientConfig.hideHttpErrorStatus
-        ? errorData = errorData
+        ? (errorData = errorData)
         : (errorData.httpStatus = { statusCode: error.response?.status, statusMessage: error.response?.statusText });
       return this.clientConfig.showRaw ? error : errorData; // The data in the response of the axios error
     }
@@ -39,7 +36,7 @@ class Miscellaneous {
   };
 
   /**
-   * 
+   *
    * @param countryCode {string} The country code of the country whose states you want to list
    * @returns {Promise<AllResponse>}
    */

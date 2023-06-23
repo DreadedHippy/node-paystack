@@ -2,14 +2,17 @@ import { AxiosInstance, AxiosError, CreateAxiosDefaults, AxiosRequestConfig } fr
 import { baseURL } from '../static/variables';
 import { createAxiosInstance } from '../utils/utils';
 import { ClientConfig } from '../interfaces/global';
-import { DisputeAddEvidenceRequestData, DisputeGetUploadURLRequestParams, DisputeListRequestParams, DisputeResolveRequestData, DisputeUpdateRequestData } from '../interfaces/dispute.request';
+import {
+  DisputeAddEvidenceRequestData,
+  DisputeGetUploadURLRequestParams,
+  DisputeListRequestParams,
+  DisputeResolveRequestData,
+  DisputeUpdateRequestData,
+} from '../interfaces/dispute.request';
 
 class Dispute {
   private paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
-  constructor(
-    private axiosConfig: CreateAxiosDefaults,
-    private clientConfig: ClientConfig
-  ) {
+  constructor(private axiosConfig: CreateAxiosDefaults, private clientConfig: ClientConfig) {
     this.paystackClient.defaults.baseURL = baseURL + 'dispute';
   }
 
@@ -22,8 +25,8 @@ class Dispute {
       let errorData = error.response?.data || error.cause;
       error.response?.data === undefined
         ? (errorData = { error: 'Data not received', cause: error.cause })
-        : this.clientConfig.hideHttpErrorStatus        
-        ? errorData = errorData
+        : this.clientConfig.hideHttpErrorStatus
+        ? (errorData = errorData)
         : (errorData.httpStatus = { statusCode: error.response?.status, statusMessage: error.response?.statusText });
       return this.clientConfig.showRaw ? error : errorData; // The data in the response of the axios error
     }

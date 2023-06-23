@@ -4,14 +4,18 @@ import { baseURL } from '../static/variables';
 import { RequestData, RequestParams } from '../interfaces/request';
 import { AllResponse } from '../interfaces/response';
 import { ClientConfig } from '../interfaces/global';
-import { DedicatedAccountAssignRequestData, DedicatedAccountCreateRequestData, DedicatedAccountListRequestParams, DedicatedAccountRemoveSplitRequestData, DedicatedAccountRequeryRequestParams, DedicatedAccountSplitAccountTransactionRequestData } from '../interfaces/dedicated_account.request';
+import {
+  DedicatedAccountAssignRequestData,
+  DedicatedAccountCreateRequestData,
+  DedicatedAccountListRequestParams,
+  DedicatedAccountRemoveSplitRequestData,
+  DedicatedAccountRequeryRequestParams,
+  DedicatedAccountSplitAccountTransactionRequestData,
+} from '../interfaces/dedicated_account.request';
 
 class DedicatedAccount {
   private paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
-  constructor(
-    private axiosConfig: CreateAxiosDefaults,
-    private clientConfig: ClientConfig
-  ) {
+  constructor(private axiosConfig: CreateAxiosDefaults, private clientConfig: ClientConfig) {
     this.paystackClient.defaults.baseURL = baseURL + 'dedicated_account';
   }
 
@@ -24,8 +28,8 @@ class DedicatedAccount {
       let errorData = error.response?.data || error.cause;
       error.response?.data === undefined
         ? (errorData = { error: 'Data not received', cause: error.cause })
-        : this.clientConfig.hideHttpErrorStatus        
-        ? errorData = errorData
+        : this.clientConfig.hideHttpErrorStatus
+        ? (errorData = errorData)
         : (errorData.httpStatus = { statusCode: error.response?.status, statusMessage: error.response?.statusText });
       return this.clientConfig.showRaw ? error : errorData; // The data in the response of the axios error
     }
@@ -38,7 +42,7 @@ class DedicatedAccount {
    * Example usage of `create` method
    * ```js
    * dedicatedAccount.create({
-   *   "customer": 481193, 
+   *   "customer": 481193,
    *   "preferred_bank": "wema-bank"
    * })
    * .then(result => console.log(result))
@@ -253,7 +257,7 @@ class DedicatedAccount {
 
   /**
    * @description Requery Dedicated Virtual Account for new transactions
-   * @param {DedicatedAccountRequeryRequestParams} params - The query parameters of the API request   * 
+   * @param {DedicatedAccountRequeryRequestParams} params - The query parameters of the API request   *
    * @see {@link listProviders} method to get a list of all provider slugs
    * @example
    * Example usage of `requery` method
@@ -334,8 +338,8 @@ class DedicatedAccount {
    * ```js
    * dedicatedAccount.splitAccountTransaction({
    *   customer: 481193,
-   *   preferred_bank:"wema-bank", 
-   *   split_code: "SPL_e7jnRLtzla" 
+   *   preferred_bank:"wema-bank",
+   *   split_code: "SPL_e7jnRLtzla"
    * })
    * .then(result => console.log(result))
    * .catch(error => console.log(error))

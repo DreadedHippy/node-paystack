@@ -1,15 +1,19 @@
 import { AxiosError, AxiosInstance, AxiosRequestConfig, CreateAxiosDefaults } from 'axios';
-import { CustomerCreateRequestData, CustomerDeactivateAuthorizationRequestData, CustomerListRequestParams, CustomerSetRiskActionRequestData, CustomerUpdateRequestData, CustomerValidateRequestData } from '../interfaces/customer.request';
+import {
+  CustomerCreateRequestData,
+  CustomerDeactivateAuthorizationRequestData,
+  CustomerListRequestParams,
+  CustomerSetRiskActionRequestData,
+  CustomerUpdateRequestData,
+  CustomerValidateRequestData,
+} from '../interfaces/customer.request';
 import { ClientConfig } from '../interfaces/global';
 import { baseURL } from '../static/variables';
 import { createAxiosInstance } from '../utils/utils';
 
 class Customer {
   private paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
-  constructor(
-    private axiosConfig: CreateAxiosDefaults,
-    private clientConfig: ClientConfig
-  ) {
+  constructor(private axiosConfig: CreateAxiosDefaults, private clientConfig: ClientConfig) {
     this.paystackClient.defaults.baseURL = baseURL + 'customer';
   }
 
@@ -22,8 +26,8 @@ class Customer {
       let errorData = error.response?.data || error.cause;
       error.response?.data === undefined
         ? (errorData = { error: 'Data not received', cause: error.cause })
-        : this.clientConfig.hideHttpErrorStatus        
-        ? errorData = errorData
+        : this.clientConfig.hideHttpErrorStatus
+        ? (errorData = errorData)
         : (errorData.httpStatus = { statusCode: error.response?.status, statusMessage: error.response?.statusText });
       return this.clientConfig.showRaw ? error : errorData; // The data in the response of the axios error
     }
@@ -69,7 +73,6 @@ class Customer {
     return this.apiRequest({ method: 'POST', data });
   };
 
-  
   /**
    * @description List customers available on your integration
    * @param {CustomerListRequestParams} params - The query parameters of the API request
@@ -124,11 +127,11 @@ class Customer {
    * }
    * ```
    * @returns {Promise<any>}
-   */ 
+   */
   list = (params?: CustomerListRequestParams) => {
     return this.apiRequest({ method: 'GET', params });
   };
-  
+
   /**
    * @description Get details of a customer on your integration.
    * @param {string} emailOrCode - The email or code of the customer.
@@ -187,7 +190,7 @@ class Customer {
    * }
    * ```
    * @returns {Promise<any>}
-   */ 
+   */
   fetch = (emailOrCode: string) => {
     return this.apiRequest({ method: 'GET', url: `${emailOrCode}` });
   };

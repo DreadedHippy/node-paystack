@@ -2,15 +2,17 @@ import { AxiosInstance, AxiosError, CreateAxiosDefaults, AxiosRequestConfig } fr
 import { baseURL } from '../static/variables';
 import { createAxiosInstance } from '../utils/utils';
 import { ClientConfig } from '../interfaces/global';
-import { TransferBulkInitiateRequestData, TransferFinalizeRequestData, TransferInitiateRequestData, TransfersListRequestParams } from '../interfaces/transfer.request';
+import {
+  TransferBulkInitiateRequestData,
+  TransferFinalizeRequestData,
+  TransferInitiateRequestData,
+  TransfersListRequestParams,
+} from '../interfaces/transfer.request';
 
 class Transfer {
   private paystackClient: AxiosInstance = createAxiosInstance(this.axiosConfig);
-  
-  constructor(
-    private axiosConfig: CreateAxiosDefaults,
-    private clientConfig: ClientConfig
-  ) {
+
+  constructor(private axiosConfig: CreateAxiosDefaults, private clientConfig: ClientConfig) {
     this.paystackClient.defaults.baseURL = baseURL + 'transfer';
   }
 
@@ -24,7 +26,7 @@ class Transfer {
       error.response?.data === undefined
         ? (errorData = { error: 'Data not received', cause: error.cause })
         : this.clientConfig.hideHttpErrorStatus
-        ? errorData = errorData
+        ? (errorData = errorData)
         : (errorData.httpStatus = { statusCode: error.response?.status, statusMessage: error.response?.statusText });
       return this.clientConfig.showRaw ? error : errorData; // The data in the response of the axios error
     }

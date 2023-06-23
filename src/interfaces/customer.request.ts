@@ -25,7 +25,7 @@ export interface CustomerListRequestParams {
   to?: string;
 }
 
-export type CustomerUpdateRequestData = Partial<Omit<CustomerCreateRequestData, "email">>;
+export type CustomerUpdateRequestData = Partial<Omit<CustomerCreateRequestData, 'email'>>;
 
 export interface CustomerValidateRequestData {
   /** Customer's first name */
@@ -33,7 +33,7 @@ export interface CustomerValidateRequestData {
   /** Customer's last name */
   last_name: string;
   /** Predefined types of identification. Only bank_account is supported at the moment */
-  type: "bank_account" | string;
+  type: 'bank_account' | string;
   /** Customer's identification number */
   value: string;
   /** 2 letter country code of identification issuer */
@@ -52,7 +52,7 @@ export interface CustomerSetRiskActionRequestData {
   /** Customer's code, or email address */
   customer: string;
   /** One of the possible risk actions [ default, allow, deny ]. allow to whitelist. deny to blacklist. Customers start with a default risk action. */
-  risk_action?: "default" | "allow" | "deny";
+  risk_action?: 'default' | 'allow' | 'deny';
 }
 
 export interface CustomerDeactivateAuthorizationRequestData {

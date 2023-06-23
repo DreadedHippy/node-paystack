@@ -26,8 +26,8 @@ class Charge {
       let errorData = error.response?.data || error.cause;
       error.response?.data === undefined
         ? (errorData = { error: 'Data not received', cause: error.cause })
-        : this.clientConfig.hideHttpErrorStatus        
-        ? errorData = errorData
+        : this.clientConfig.hideHttpErrorStatus
+        ? (errorData = errorData)
         : (errorData.httpStatus = { statusCode: error.response?.status, statusMessage: error.response?.statusText });
       return this.clientConfig.showRaw ? error : errorData; // The data in the response of the axios error
     }
@@ -204,7 +204,7 @@ class Charge {
    *   }
    * }
    * ```
-   * 
+   *
    * @returns {Promise<any>}
    */
   submitPin = (data: ChargeSubmitPinRequestData) => {
@@ -288,7 +288,7 @@ class Charge {
    *   }
    * }
    * ```
-   * 
+   *
    * @returns {Promise<any>}
    */
   submitOTP = (data: ChargeSubmitOTPRequestData) => {
@@ -372,7 +372,7 @@ class Charge {
    *   }
    * }
    * ```
-   * 
+   *
    * @returns {Promise<any>}
    */
   submitPhone = (data: ChargeSubmitPhoneRequestData) => {
@@ -456,7 +456,7 @@ class Charge {
    *   }
    * }
    * ```
-   * 
+   *
    * @returns {Promise<any>}
    */
   submitBirthday = (data: ChargeSubmitBirthdayRequestData) => {
@@ -536,7 +536,7 @@ class Charge {
    *   }
    * }
    * ```
-   * 
+   *
    * @returns {Promise<any>}
    */
   submitAddress = (data: ChargeSubmitAddressRequestData) => {
@@ -615,7 +615,7 @@ class Charge {
    *   }
    * }
    * ```
-   * 
+   *
    * @returns {Promise<any>}
    */
   checkPending = (reference: string) => {

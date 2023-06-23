@@ -31,7 +31,7 @@ export interface DedicatedAccountAssignRequestData {
   /** The bank slug for preferred bank. To get a list of available banks, use the `List Banks` endpoint, passing `pay_with_bank_transfer=tru`e query parameter */
   preferred_bank: string;
   /** Customer's country: Currently accepts NG only */
-  country: "NG";
+  country: 'NG';
   /** Customer's account number */
   account_number?: string;
   /** Customer's Bank Verification Number */
@@ -43,7 +43,6 @@ export interface DedicatedAccountAssignRequestData {
   /** Split code consisting of the lists of accounts you want to split the transaction with */
   split_code?: string;
 }
-
 
 export interface DedicatedAccountListRequestParams {
   /** Status of the dedicated virtual account */
@@ -64,7 +63,7 @@ export interface DedicatedAccountRequeryRequestParams {
   /** The bank's slug in lowercase, without spaces e.g. `wema-bank` */
   provider_slug: string;
   /** The day the transfer was made in YYYY-MM-DD format */
-  date?: string
+  date?: string;
 }
 
 export interface DedicatedAccountSplitAccountTransactionRequestData {
@@ -82,4 +81,3 @@ export interface DedicatedAccountRemoveSplitRequestData {
   /** Dedicated virtual account number */
   account_number: string;
 }
-
