@@ -31,8 +31,9 @@ class BulkCharge {
 
   /**
    * @description Send an array of objects with authorization codes and amount (in **kobo** if currency is `NGN`, **pesewas**, if currency is `GHS`, and **cents** if currency is `ZAR`) so we can process transactions as a batch.
+   * @param {object} data The body of the API request
    * @example
-   * Example usage of initiate method
+   * Example usage of `initiate` method
    *  ```js
    *  bulkCharge.initiate([
    *     {"authorization": "AUTH_ncx8hews93", "amount": 2500, "reference": "dam1266638dhhd"}, 
@@ -41,7 +42,7 @@ class BulkCharge {
    * .then(result => console.log(result))
    * .catch(error => console.log(error))
    *  ```
-   * @example
+   * ***
    * Sample default Response
    * ```json
    *  {
@@ -61,7 +62,6 @@ class BulkCharge {
    *   }
    *  }
    * ```
-   * @param {object} data The body of the API request
    * @returns {Promise<any>}
    */
   initiate = (data: BulkChargeInitiateRequestData[]) => {
@@ -70,16 +70,16 @@ class BulkCharge {
 
   
   /**
-   * @description This lists all bulk charge batches created by the integration. Statuses can be `active`, `paused`, or `complete`
+   * @description This lists all bulk charge batches created by the integration. Statuses can be `active`, `paused`, or `complete`.
+   * @param {object} params The query params of the API request
    * @example
-   * Example usage of the list method
+   * Example usage of the `list` method
    * ```js
    * bulkCharge.list()
    * .then(result => console.log(result))
    * .catch(error => console.log(error))
    * ```
-   * 
-   * @example
+   * ***
    * Sample default response
    * ```json
    * {
@@ -104,7 +104,6 @@ class BulkCharge {
    *   }
    * }
    * ```
-   * @param {object} params The query params of the API request
    * @returns {Promise<any>}
    */
   list = (params?: BulkChargeListRequestParams) => {
@@ -122,8 +121,7 @@ class BulkCharge {
    * .then(result => console.log(result))
    * .catch(error => console.log(error))
    * ```
-   * 
-   * @example
+   * ***
    * Sample default response
    * ```json
    * {
@@ -150,7 +148,8 @@ class BulkCharge {
   
   /**
    * @description This endpoint retrieves the charges associated with a specified batch code. Pagination parameters are available. You can also filter by status. Charge statuses can be `pending`, `success` or `failed`.
-   * 
+   * @param {string} batchIdOrCode - The batch Id or batch code of the required batch
+   * @param {object} params - The query params of the API request
    * @example
    * Example usage of `fetchCharges` method
    * ```js
@@ -158,8 +157,7 @@ class BulkCharge {
    * .then(result => console.log(result))
    * .catch(error => console.log(error))
    * ```
-   * 
-   * @example
+   * ***
    * Sample default response
    * ```json
    * {
@@ -294,9 +292,6 @@ class BulkCharge {
    *   }
    * }
    * ```
-   * 
-   * @param {string} batchIdOrCode - The batch Id or batch code of the required batch
-   * @param {object} params - The query params of the API request
    * @returns {Promise<any>}
    */
   fetchCharges = (batchIdOrCode: string, params?: BulkChargeFetchChargeRequestParams) => {
@@ -305,7 +300,7 @@ class BulkCharge {
   
   /**
    * @description Use this endpoint to pause processing a batch
-   * 
+   * @param {string} batchCode - The batch code of the required batch
    * @example
    * Example usage of `pause` method
    * ```js
@@ -313,8 +308,7 @@ class BulkCharge {
    * .then(result => console.log(result))
    * .catch(error => console.log(error))
    * ```
-   * 
-   * @example
+   * ***
    * Sample default response
    * ```json
    * {
@@ -322,8 +316,7 @@ class BulkCharge {
    *   "message": "Bulk charge batch has been paused"
    * }
    * ```
-   * 
-   * @param {string} batchCode - The batch code of the required batch
+   * @see {@link resume} method to resume processing a batch
    * @returns {Promise<any>}
    */
   pause = (batchCode: string) => {
@@ -333,6 +326,7 @@ class BulkCharge {
   
   /**
    * @description Use this endpoint to resume processing a batch
+   * @param {string} batchCode - The batch code of the required batch
    * @example
    * Example usage of `resume` method
    * ```js
@@ -340,17 +334,15 @@ class BulkCharge {
    * .then(result => console.log(result))
    * .catch(error => console.log(error))
    * ```
-   * 
-   * @example
-   * Sample default response
+   * ***
+   * Sample default response:
    * ```json
    * {
    *   "status": true,
    *   "message": "Bulk charge batch has been resumed"
    * }
    * ```
-   * 
-   * @param {string} batchCode - The batch code of the required batch
+   * @see {@link pause} method to pause processing a batch
    * @returns {Promise<any>}
    */
   resume = (batchCode: string) => {
