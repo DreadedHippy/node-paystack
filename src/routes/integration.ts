@@ -27,10 +27,55 @@ class Integration {
     }
   };
 
+  /**
+   * @description Fetch the payment session timeout on your integration
+   * @example
+   * Example usage of `fetchTimeout` method
+   * ```js
+   * integration.fetchTimeout()
+   * .then(result => console.log(result))
+   * .catch(error => console.log(error))
+   * ```
+   * ***
+   * Sample default response:
+   * ```json
+   * {
+   *   "status": true,
+   *   "message": "Payment session timeout retrieved",
+   *   "data": {
+   *     "payment_session_timeout": 30
+   *   }
+   * }
+   * ```
+   * @returns {Promise<any>}
+   */
   fetchTimeout = () => {
     return this.apiRequest({ method: 'GET', url: `payment_session_timeout` });
   };
 
+  /**
+   * @description Update the payment session timeout on your integration
+   * @param {{timeout: number}} data - Time before stopping session (in seconds). Set to 0 to cancel session timeouts
+   * @example
+   * Example usage of `updateTimeout` method
+   * ```js
+   * integration.updateTimeout({ "timeout": 30 })
+   * .then(result => console.log(result))
+   * .catch(error => console.log(error))
+   * ```
+   * ***
+   * Sample default response:
+   * ```json
+   * {
+   *   "status": true,
+   *   "message": "Payment session timeout retrieved",
+   *   "data": {
+   *     "payment_session_timeout": 30
+   *   }
+   * }
+   * ```
+   * @returns {Promise<any>}
+   */
   updateTimeout = (data: { timeout: number }) => {
     return this.apiRequest({ method: 'PUT', url: `payment_session_timeout`, data });
   };
