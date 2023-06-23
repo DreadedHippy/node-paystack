@@ -14,7 +14,7 @@ export interface PageCreateRequestData {
 	/** If you would like Paystack to redirect someplace upon successful payment, specify the URL here. */
 	redirect_url?: string;
 	/** If you would like to accept custom fields, specify them here. */
-	custom_fields?: Array<object>;
+	custom_fields?: object[];
 }
 
 export interface PageListRequestParams {
@@ -41,5 +41,5 @@ export interface PageUpdateRequestData {
 
 export interface PageAddProductsRequestData {
 	/** Ids of all the products */
-	product: Array<number>;
+	product: number[];
 }

@@ -23,7 +23,7 @@ class Split {
       error.response?.data === undefined
         ? (errorData = { error: 'Data not received', cause: error.cause })
         : this.clientConfig.hideHttpErrorStatus
-        ? errorData
+        ? errorData = errorData
         : (errorData.httpStatus = { statusCode: error.response?.status, statusMessage: error.response?.statusText });
       return this.clientConfig.showRaw ? error : errorData; // The data in the response of the axios error
     }

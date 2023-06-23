@@ -8,9 +8,9 @@ export interface PaymentRequestCreateRequestData {
 	/** A short description of the payment request */
 	description?: string;
 	/** Array of line items in the format `[{"name":"item 1", "amount":2000, "quantity": 1}]` */
-	line_items?: Array<{name: string, item: string, amount: number, quantity: number}>;
+	line_items?: {name: string, amount: number, quantity?: number}[];
 	/** Array of taxes to be charged in the format `[{"name":"VAT", "amount":2000}]` */
-	tax?: Array<{name: "VAT", amount: number}>;
+	tax?: {name: "VAT", amount: number}[];
 	/** Specify the currency of the payment request. Allowed values are `NGN`, `GHS`, `ZAR` and `USD`. Defaults to `NGN` */
 	currency?: `NGN` | `GHS` | `USD` | `ZAR`;
 	/** Indicates whether Paystack sends an email notification to customer. Defaults to `true` */

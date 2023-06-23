@@ -52,5 +52,3 @@ export type DisputeResolveRequestData = {
 	/** Evidence Id for fraud claims */
 	evidence?: number
 }
-
-export interface DisputeExportRequestParams extends DisputeListRequestParams {}

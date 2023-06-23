@@ -18,7 +18,7 @@ export interface TransferRecipientCreateRequestData {
 }
 
 export interface TransferRecipientBulkCreateRequestData {
-	batch: Array<TransferRecipientCreateRequestData> | {
+	batch: TransferRecipientCreateRequestData[] | {
 		/** Recipient Type. It could be one of: `nuban`, `mobile_money` or `basa` */
 		type: `nuban` | `mobile_money` | `basa`;
 		/** A name for the recipient */

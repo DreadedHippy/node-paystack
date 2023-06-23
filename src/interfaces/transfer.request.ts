@@ -24,12 +24,12 @@ export interface TransferBulkInitiateRequestData {
 	/** Where should we transfer from? Only `balance` for now */
 	source: `balance` | string;
 	/** A list of transfer object. Each object should contain `amount`, `recipient`, and `reference` */
-	transfers: Array<{
+	transfers: {
 		amount: number;
 		recipient: string;
 		reference: string;
 		reason?: string;
-	}>;
+	}[];
 }
 
 export interface TransfersListRequestParams {

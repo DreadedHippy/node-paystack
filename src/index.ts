@@ -193,8 +193,8 @@ class Paystack {
  * @returns {Paystack} A new instance of the Paystack API Wrapper class
  */
 function node_paystack(key: string, config: ClientConfig = {showRaw: false, hideHttpErrorStatus: false}) {
-  config.showRaw ? config.showRaw : config.showRaw = false;
-  config.hideHttpErrorStatus ? config.hideHttpErrorStatus : config.hideHttpErrorStatus = false;
+  config.showRaw ? config.showRaw = true : config.showRaw = false;
+  config.hideHttpErrorStatus ? config.hideHttpErrorStatus = true : config.hideHttpErrorStatus = false;
   
   return new Paystack(key, config);
 }

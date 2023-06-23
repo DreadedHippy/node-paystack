@@ -16,7 +16,7 @@ export interface TransactionInitializeRequestData {
 	/** Stringified JSON object of custom data. Kindly check the [Metadata](https://paystack.com/docs/payments/metadata) page for more information. */
 	metadata?: string | object;
 	/** An array of payment channels to control what channels you want to make available to the user to make a payment with. Available channels include: `["card", "bank", "ussd", "qr", "mobile_money", "bank_transfer", "eft"] */
-	channels?: Array<"card" | "bank" | "ussd" | "qr" | "mobile_money" | "bank_transfer" | "eft">;
+	channels?: ("card" | "bank" | "ussd" | "qr" | "mobile_money" | "bank_transfer" | "eft")[];
 	/** The split code of the transaction split. e.g. `SPL_98WF13Eb3w` */
 	split_code?: string;
 	/** The code for the subaccount that owns the payment. e.g. `ACCT_8f4s1eq7ml6rlzj` */
@@ -60,7 +60,7 @@ export interface TransactionChargeAuthorizationRequestData {
 	/** Stringified JSON object. Add a `custom_fields` attribute which has an array of objects if you would like the fields to be added to your transaction when displayed on the dashboard. Sample: `{"custom_fields":[{"display_name":"Cart ID","variable_name": "cart_id","value": "8393"}]}` */
 	metadata?: string | object;
 	/** Send us ``card`` or ``bank`` or `'card','bank'` as an array to specify what options to show the user paying */
-	channels?: Array<string>;
+	channels?: string[];
 	/** The code for the subaccount that owns the payment. e.g. `ACCT_8f4s1eq7ml6rlzj` */
 	subaccount?: string;
 	/** A flat fee to charge the subaccount for this transaction (in **kobo** if currency is `NGN`, **pesewas**, if currency is `GHS`, and **cents**, if currency is `ZAR`). This overrides the split percentage set when the subaccount was created. Ideally, you will need to use this if you are splitting in flat rates (since subaccount creation only allows for percentage split). e.g. 7000 for a 70 naira flat fee. */

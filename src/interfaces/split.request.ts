@@ -6,7 +6,7 @@ export interface SplitCreateRequestData {
 	/** Any of `NGN`, `GHS`, `ZAR`, or `USD` */
 	currency: `NGN` | `GHS` | `ZAR` | `USD`;
 	/** A list of object containing subaccount code and number of shares: `[{subaccount: ‘ACT_xxxxxxxxxx’, share: xxx},{...}]` */
-	subaccounts: Array<{subaccount: string, share: number}>;
+	subaccounts: {subaccount: string, share: number}[];
 	/** Any of `subaccount` | `account` | `all-proportional` | `all` */
 	bearer_type: `subaccount` | `account` | `all-proportional` | `all`;
 	/** Subaccount code */
