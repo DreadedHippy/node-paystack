@@ -7,6 +7,9 @@ on:
   workflow_dispatch:
   release:
     types: [publish]
+    
+env:
+  KEY: ${{secrets.API_KEY}}
 
 jobs:
   build:
@@ -17,7 +20,8 @@ jobs:
         with:
           node-version: 16
       - run: npm ci
-      - run: |
+      - name: Run tests
+        run: |
           touch .env
           echo KEY=${{ secrets.API_KEY }} >> .env
           export KEY=${{env.KEY}}
