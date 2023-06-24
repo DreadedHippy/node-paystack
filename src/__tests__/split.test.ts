@@ -20,9 +20,9 @@ describe('Split tests', () => {
   // });
 
   test('Test id as number instead of string', async () => {
-    const result = await paystack.split.update(760472, { name: 'Numbered ID' })
+    const result = await paystack.split.update(760472, { name: 'Numbered ID' });
     expect(result.data.name).toBe('Numbered ID');
-    if(result.status === true){
+    if (result.status === true) {
       expect(result.data.name).toEqual('Numbered ID');
     } else {
       expect(result.status).toEqual(false);
@@ -30,8 +30,8 @@ describe('Split tests', () => {
   });
 
   test('Update bearer type to all', async () => {
-    const result = await paystack.split.update('760472', { bearer_type: 'all' })
-    if(result.status === true){
+    const result = await paystack.split.update('760472', { bearer_type: 'all' });
+    if (result.status === true) {
       expect(result.data.bearer_type).toBe('all');
     } else {
       expect(result.status).toBe(false);
