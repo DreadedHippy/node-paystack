@@ -4,7 +4,7 @@ export interface PageCreateRequestData {
   /** A description for this page */
   description?: string;
   /** The type of the page to be created */
-  type: string
+  type: string;
   /** Amount should be in **kobo** if currency is `NGN`, **pesewas**, if currency is `GHS`, and **cents**, if currency is `ZAR` */
   amount?: number;
   /** The split code of the transaction split. e.g. `SPL_98WF13Eb3w` */
