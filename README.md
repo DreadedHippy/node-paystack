@@ -1,4 +1,6 @@
 # NodeJS Paystack API Wrapper by Aizon
+##  [![npm version](https://badge.fury.io/js/@aizon%2Fnode-paystack.svg)](https://badge.fury.io/js/@aizon%2Fnode-paystack)  ![GitHub last commit (by committer)](https://img.shields.io/github/last-commit/DreadedHippy/node-paystack) ![Workflow status](https://github.com/DreadedHippy/node-paystack/actions/workflows/npm-publish.yml/badge.svg) ![Repo Views](https://vbr.wocr.tk/badge?page_id=DreadedHippy.node-paystack&text=views&color=4EC820&logo=Github)
+
 This is a simple Paystack API wrapper for Node.js designed to be easy to use.
 
 ## Features
