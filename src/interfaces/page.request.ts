@@ -3,6 +3,8 @@ export interface PageCreateRequestData {
   name: string;
   /** A description for this page */
   description?: string;
+  /** The type of the page to be created */
+  type: string
   /** Amount should be in **kobo** if currency is `NGN`, **pesewas**, if currency is `GHS`, and **cents**, if currency is `ZAR` */
   amount?: number;
   /** The split code of the transaction split. e.g. `SPL_98WF13Eb3w` */
@@ -41,5 +43,5 @@ export interface PageUpdateRequestData {
 
 export interface PageAddProductsRequestData {
   /** Ids of all the products */
-  product: number[];
+  products: number[];
 }
