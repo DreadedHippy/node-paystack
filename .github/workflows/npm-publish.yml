@@ -20,7 +20,11 @@ jobs:
         with:
           node-version: 16
       - run: npm ci
-      - run: npm test
+      - run: |
+          touch .env
+          echo KEY=${{ secrets.API_KEY }} >> .env
+          export KEY=${{env.KEY}}
+          npm test
 
   publish-npm:
     needs: build
