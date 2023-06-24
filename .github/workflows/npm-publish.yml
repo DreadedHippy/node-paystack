@@ -20,7 +20,8 @@ jobs:
         with:
           node-version: 16
       - run: npm ci
-      - run: |
+      - name: Run build tests 
+        run: |
           touch .env
           echo KEY=${{ secrets.API_KEY }} >> .env
           export KEY=${{env.KEY}}
@@ -36,7 +37,8 @@ jobs:
           node-version: 16
           registry-url: https://registry.npmjs.org/
       - run: npm ci
-      - run: |
+      - name: Publish package
+        run: |
           touch .env
           echo KEY=${{ secrets.API_KEY }} >> .env
           export KEY=${{env.KEY}}
