@@ -299,7 +299,7 @@ class Page {
    * Example usage of `addProducts` method
    * ```js
    * paymentPage.addProducts("102859", {
-   *   "product": [473, 292]
+   *   "products": [473, 292]
    * })
    * .then(result => console.log(result))
    * .catch(error => console.log(error))
