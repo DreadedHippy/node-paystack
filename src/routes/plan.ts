@@ -34,7 +34,7 @@ class Plan {
    * ```js
    * plan.create({
    *   "name": "Monthly retainer",
-   *   "interval": "monthly", 
+   *   "interval": "monthly",
    *   "amount": "500000"
    * })
    * .then(result => console.log(result))

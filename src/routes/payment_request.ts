@@ -500,7 +500,7 @@ class PaymentRequest {
    * @returns {Promise<any>}
    */
   finalize = (code: string, data: PaymentRequestFinalizeRequestData) => {
-    return this.apiRequest({method: 'POST', url: `finalize/${code}`, data });
+    return this.apiRequest({ method: 'POST', url: `finalize/${code}`, data });
   };
 
   /**
@@ -511,7 +511,7 @@ class PaymentRequest {
    * Example usage of `update` method
    * ```js
    * paymentRequest.update("PRQ_1weqqsn2wwzgft8",{
-   *   "description": "Update test invoice", 
+   *   "description": "Update test invoice",
    *   "due_date": "2017-05-10"
    * })
    * .then(result => console.log(result))
