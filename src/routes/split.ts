@@ -111,7 +111,6 @@ class Split {
    *   ],
    *   "total_subaccounts": 2
    * }
-  }*
    * ```
    * @returns {Promise<any>}
    */
