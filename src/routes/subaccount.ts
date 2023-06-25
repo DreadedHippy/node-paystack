@@ -38,9 +38,9 @@ class Subaccount {
    * ```js
    * subaccount.create({
    *   "business_name": "Sunshine Studios",
-   *   "settlement_bank": "044", 
-   *   "account_number": "0193274682", 
-   *   "percentage_charge": 18.2 
+   *   "settlement_bank": "044",
+   *   "account_number": "0193274682",
+   *   "percentage_charge": 18.2
    * })
    * .then(result => console.log(result))
    * .catch(error => console.log(error))

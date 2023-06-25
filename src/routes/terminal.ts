@@ -40,8 +40,8 @@ class Terminal {
    * terminal.sendEvent(30, {
    *   "type": "invoice",
    *   "action": "process",
-   *   "data": { 
-   *     "id": 7895939, 
+   *   "data": {
+   *     "id": 7895939,
    *     "reference": 4634337895939
    *   }
    * })
@@ -231,7 +231,7 @@ class Terminal {
    * @example
    * Example usage of `commission` method
    * ```js
-   * terminal.commission({ 
+   * terminal.commission({
    *   "serial_number": "1111150412230003899"
    * })
    * .then(result => console.log(result))
@@ -257,7 +257,7 @@ class Terminal {
    * @example
    * Example usage of `decommission` method
    * ```js
-   * terminal.decommission({ 
+   * terminal.decommission({
    *   "serial_number": "1111150412230003899"
    * })
    * .then(result => console.log(result))

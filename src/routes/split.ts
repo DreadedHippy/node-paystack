@@ -39,9 +39,9 @@ class Split {
    * Example usage of `create` method
    * ```js
    * split.create({
-   *   "name":"Percentage Split", 
+   *   "name":"Percentage Split",
    *   "type":"percentage",
-   *   "currency": "NGN", 
+   *   "currency": "NGN",
    *   "subaccounts":[{
    *     "subaccount": "ACCT_z3x6z3nbo14xsil",
    *     "share": 20
@@ -49,8 +49,8 @@ class Split {
    *   {
    *       "subaccount": "ACCT_pwwualwty4nhq9d",
    *       "share": 30
-   *   }], 
-   *   "bearer_type":"subaccount", 
+   *   }],
+   *   "bearer_type":"subaccount",
    *   "bearer_subaccount":"ACCT_hdl8abxl8drhrl3"
    * })
    * .then(result => console.log(result))
@@ -342,7 +342,7 @@ class Split {
    * Example usage of `upsertSubaccount` method
    * ```js
    * split.upsertSubaccount(143, {
-   *   "subaccount": "ACCT_hdl8abxl8drhrl3", 
+   *   "subaccount": "ACCT_hdl8abxl8drhrl3",
    *   "share": 40000
    * })
    * .then(result => console.log(result))

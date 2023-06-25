@@ -22,7 +22,7 @@ export interface TransferFinalizeRequestData {
 
 export interface TransferBulkInitiateRequestData {
   /** The currency of the transfers */
-  currency?: string
+  currency?: string;
   /** Where should we transfer from? Only `balance` for now */
   source: `balance` | string;
   /** A list of transfer object. Each object should contain `amount`, `recipient`, and `reference` */

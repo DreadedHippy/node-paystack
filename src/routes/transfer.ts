@@ -39,9 +39,9 @@ class Transfer {
    * Example usage of `initiate` method
    * ```js
    * transfer.initiate({
-   *   "source": "balance", 
-   *   "reason": "Calm down", 
-   *   "amount":3794800, 
+   *   "source": "balance",
+   *   "reason": "Calm down",
+   *   "amount":3794800,
    *   "recipient": "RCP_gx2wn530m0i3w3m"
    * })
    * .then(result => console.log(result))
@@ -82,7 +82,7 @@ class Transfer {
    * Example usage of `finalize` method
    * ```js
    * transfer.finalize({
-   *   "transfer_code": "TRF_vsyqdmlzble3uii", 
+   *   "transfer_code": "TRF_vsyqdmlzble3uii",
    *   "otp": "928783"
    * })
    * .then(result => console.log(result))
