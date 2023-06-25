@@ -29,6 +29,33 @@ class Verification {
     }
   };
 
+  /**
+   * @description Confirm an account belongs to the right customer
+   * @param {VerificationResolveAccountRequestParams} params - The query parameters of the API request
+   * @example
+   * Example usage of `resolveAccount` method
+   * ```js
+   * verification.resolveAccount({
+   *   account_number: "0022728151",
+   *   bank_code: "063"
+   * })
+   * .then(result => console.log(result))
+   * .catch(error => console.log(error))
+   * ```
+   * ***
+   * Sample default response:
+   * ```json
+   * {
+   *   "status": true,
+   *   "message": "Account number resolved",
+   *   "data": {
+   *     "account_number": "0022728151",
+   *     "account_name": "WES GIBBONS"
+   *   }
+   * }
+   * ```
+   * @returns {Promise<any>}
+   */
   resolveAccount = async (params: VerificationResolveAccountRequestParams) => {
     return this.apiRequest({
       method: 'GET',
@@ -36,10 +63,72 @@ class Verification {
     });
   };
 
+  /**
+   * @description Confirm the authenticity of a customer's account number before sending money
+   * @param {VerificationValidateAccountRequestData} data - The body of the API request
+   * @example
+   * Example usage of `resolveAccount` method
+   * ```js
+   * verification.validateAccount({
+   *   "bank_code": "632005",
+   *   "country_code": "ZA",
+   *   "account_number": "0123456789",
+   *   "account_name": "Ann Bron",
+   *   "account_type": "personal",
+   *   "document_type": "identityNumber",
+   *   "document_number": "1234567890123"
+   * })
+   * .then(result => console.log(result))
+   * .catch(error => console.log(error))
+   * ```
+   * ***
+   * Sample default response:
+   * ```json
+   * {
+   *   "status": true,
+   *   "message": "Account number resolved",
+   *   "data": {
+   *     "account_number": "0022728151",
+   *     "account_name": "WES GIBBONS"
+   *   }
+   * }
+   * ```
+   * @returns {Promise<any>}
+   */
   validateAccount = async (data: VerificationValidateAccountRequestData) => {
     return this.apiRequest({ method: 'POST', url: `bank/validate`, data });
   };
 
+  /**
+   * @description Get more information about a customer's card
+   * @param {string} bin - The body of the API request
+   * @example
+   * Example usage of `resolveCardBin` method
+   * ```js
+   * verification.resolveCardBin("539983")
+   * .then(result => console.log(result))
+   * .catch(error => console.log(error))
+   * ```
+   * ***
+   * Sample default response:
+   * ```json
+   * {
+   *   "status": true,
+   *   "message": "Bin resolved",
+   *   "data": {
+   *     "bin": "539983",
+   *     "brand": "Mastercard",
+   *     "sub_brand": "",
+   *     "country_code": "NG",
+   *     "country_name": "Nigeria",
+   *     "card_type": "DEBIT",
+   *     "bank": "Guaranty Trust Bank",
+   *     "linked_bank_id": 9
+   *   }
+   * }
+   * ```
+   * @returns {Promise<any>}
+   */
   resolveCardBin = async (bin: string) => {
     return this.apiRequest({ method: 'GET', url: `decision/bin/${bin}` });
   };

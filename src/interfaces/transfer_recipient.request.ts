@@ -25,6 +25,8 @@ export interface TransferRecipientBulkCreateRequestData {
         type: `nuban` | `mobile_money` | `basa`;
         /** A name for the recipient */
         name: string;
+        /** Required if type is `nuban` or `basa` */
+        account_number: string;
         /** Required if type is `nuban` or `basa`. You can get the list of Bank Codes by calling the [List Banks](https://paystack.com/docs/api/miscellaneous#bank) endpoint. */
         bank_code: string;
       };
