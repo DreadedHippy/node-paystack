@@ -156,7 +156,6 @@ class Subaccount {
   /**
    * @description Get details of a subaccount on your integration
    * @param {string} idOrCode - The ID or code of the subaccount you want to fetch
-
    * @example
    * Example usage of `fetch` method
    * ```js

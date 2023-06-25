@@ -32,7 +32,7 @@ class Split {
     }
   };
 
- /**
+  /**
    * @description Create a split payment on your integration
    * @param {SplitCreateRequestData} data - The body of the API request
    * @example
@@ -119,7 +119,7 @@ class Split {
     return this.apiRequest({ method: 'POST', data });
   };
 
- /**
+  /**
    * @description List the transaction splits available on your integration
    * @param {SplitListRequestParams} params - The query parameters of the API request
    * @example
