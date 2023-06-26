@@ -5,7 +5,7 @@ This is a simple Paystack API wrapper for Node.js designed to be easy to use.
 
 ## Features
 - Full support for all Paystack API routes as at 2023/06/23
-- VSCode intellisense support for most routes
+- VSCode intellisense support for ~~most~~ all routes
 - Much more coming soon
 
 ## Getting started
@@ -41,10 +41,9 @@ You can begin making API calls by emulating the following, this returns promisif
 ```js
 // Method 1
 paystack.customer.list()
-.then(result => console.log(result))
-.catch(error => console.log(error));
+.then(result => console.log(result)) //No need for a ".catch" block
 
 // Method 2
-const result = await paystack.customer.list()
+const result = await paystack.customer.list() // No need for a "try, catch" block.
 console.log(result);
 ```
