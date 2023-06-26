@@ -23,7 +23,6 @@ jobs:
       - name: Run build tests 
         run: |
           touch .env
-          echo KEY=${{ secrets.API_KEY }} >> .env
           export KEY=${{env.KEY}}
           npm test
 
@@ -40,7 +39,6 @@ jobs:
       - name: Publish package
         run: |
           touch .env
-          echo KEY=${{ secrets.API_KEY }} >> .env
           export KEY=${{env.KEY}}
           npm publish
         env:
