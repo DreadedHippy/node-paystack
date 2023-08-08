@@ -86,7 +86,7 @@ async function makePayment() {
   let reference = result.data.reference
 
   // Verifying the transaction using the `transaction.verify()` method and passing the `reference`
-  let verification = await transaction.verify(reference)
+  let verification = await paystack.transaction.verify(reference)
 
   // The transaction is successful if the `status` of `verification` is true
   let isSuccessful = verification.status
@@ -103,7 +103,7 @@ paystack.transaction.initialize({
   amount: 100000
 }).then( result => {
     let reference = result.data.reference;
-    transaction.verify(reference).then( result => {  
+    paystack.transaction.verify(reference).then( result => {  
       if(status == true) {
         console.log("Transaction verified")
       }      
@@ -122,7 +122,7 @@ async function makePayment() {
   })
   let reference = result.data.reference;
 
-  let verification = await transaction.verify(reference)
+  let verification = await paystack.transaction.verify(reference)
 
   let isSuccessful = verification.status;
   if(isSuccessful){
