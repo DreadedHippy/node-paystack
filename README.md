@@ -1,7 +1,7 @@
 # @aizon/node-paystack 💫
 ##  [![npm version](https://badge.fury.io/js/@aizon%2Fnode-paystack.svg)](https://badge.fury.io/js/@aizon%2Fnode-paystack)  ![GitHub last commit (by committer)](https://img.shields.io/github/last-commit/DreadedHippy/node-paystack) ![Workflow status](https://github.com/DreadedHippy/node-paystack/actions/workflows/npm-publish.yml/badge.svg) ![Repo Views](https://vbr.wocr.tk/badge?page_id=DreadedHippy.node-paystack&text=views&color=4EC820&logo=Github)
 
-This is a simple Paystack API wrapper for Node.js designed to be easy to use. Use this npm package in your Node.js backend servers to seamlessly integrate paystack payments.
+This is a simple Paystack API wrapper for Node.js designed to be easy to use. Use this npm package in your Node.js backend servers to seamlessly integrate paystack payments. View all supported routes [here](https://github.com/DreadedHippy/node-paystack#routes)
 
 ## Features
 - Full support for all Paystack API routes as at 2023/06/23 🚀
